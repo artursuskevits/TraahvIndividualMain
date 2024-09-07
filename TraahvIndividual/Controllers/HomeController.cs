@@ -32,7 +32,7 @@ namespace TraahvIndividual.Controllers
 
             return View();
         }
-
+        [AuthorizeUser("Admin@gmail.com")]
         public ActionResult Traahv()
         {
             IEnumerable<Traahv> traahvs = db.Traahv.ToList();

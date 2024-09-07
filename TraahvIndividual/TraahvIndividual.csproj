@@ -178,6 +178,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\AuthorizeUserAttribute.cs" />
     <Compile Include="Models\Traahv.cs" />
     <Compile Include="Models\TrahvidContext.cs" />
     <Compile Include="Models\TrahvidDbInitalizer.cs" />
