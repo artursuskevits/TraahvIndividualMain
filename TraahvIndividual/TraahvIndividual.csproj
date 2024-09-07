@@ -260,6 +260,7 @@
     <Content Include="Views\Home\CreateTraahv.cshtml" />
     <Content Include="Views\Home\EditTraahv.cshtml" />
     <Content Include="Views\Home\DeleteTraahv.cshtml" />
+    <Content Include="Views\Home\TraahvUsers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

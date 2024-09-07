@@ -14,10 +14,19 @@ namespace TraahvIndividual.Controllers
     public class HomeController : Controller
     {
         TrahvidContext db = new TrahvidContext();
-        public ActionResult Index()
+        public ActionResult Index(string searchCarNumber = null)
         {
-            return View();
+            var penalties = db.Traahv.AsQueryable();  // Запрос к базе данных
+
+            // Если введен номер машины для поиска, отфильтруем результаты
+            if (!string.IsNullOrEmpty(searchCarNumber))
+            {
+                penalties = penalties.Where(p => p.SoidukeNumber.Contains(searchCarNumber));
+            }
+
+            return View(penalties.ToList());  // Возвращаем результат в представление
         }
+
 
         public ActionResult About()
         {
@@ -32,8 +41,14 @@ namespace TraahvIndividual.Controllers
 
             return View();
         }
-        [AuthorizeUser("Admin@gmail.com")]
+        [AuthorizeUser("Admin2@gmail.com")]
         public ActionResult Traahv()
+        {
+            IEnumerable<Traahv> traahvs = db.Traahv.ToList();
+            return View(traahvs);
+        }
+        [Authorize]
+        public ActionResult TraahvUsers()
         {
             IEnumerable<Traahv> traahvs = db.Traahv.ToList();
             return View(traahvs);
@@ -41,13 +56,14 @@ namespace TraahvIndividual.Controllers
         [HttpGet]
         public ActionResult CreateTraahv()
         {
+
             return View();
         }
 
 
         public ActionResult CreateTraahv(Traahv trahv)
         {
-            trahv.CalculateFine(); 
+            trahv.CalculateFine();
             db.Traahv.Add(trahv);
             db.SaveChanges();
             trahv.SendMessage();
@@ -68,7 +84,7 @@ namespace TraahvIndividual.Controllers
         [HttpPost, ActionName("EditTraahv")]
         public ActionResult EditTraahvConfirmed(Traahv guest)
         {
-            guest.CalculateFine(); 
+            guest.CalculateFine();
             db.Entry(guest).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Traahv");
@@ -97,5 +113,21 @@ namespace TraahvIndividual.Controllers
             db.SaveChanges();
             return RedirectToAction("Traahv");
         }
+        //public ActionResult Index(string searchCarNumber = null)
+        //{
+        //    var penalties = db.Traahv.AsQueryable();  // Запрос к базе данных
+
+        //    // Если введен номер машины для поиска, отфильтруем результаты
+        //    if (!string.IsNullOrEmpty(searchCarNumber))
+        //    {
+        //        penalties = penalties.Where(p => p.SoidukeNumber.Contains(searchCarNumber));
+        //    }
+
+        //    return View(penalties.ToList());  // Возвращаем результат в представление
+        //}
+
     }
+
+
+
 }
