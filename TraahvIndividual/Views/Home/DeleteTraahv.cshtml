@@ -1,0 +1,72 @@
+﻿@model TraahvIndividual.Models.Traahv
+
+@{
+    ViewBag.Title = "DeleteTraahv";
+}
+
+<h2>DeleteTraahv</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Traahv</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SoidukeNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoidukeNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OmanikuNimi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OmanikuNimi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OmanikuEpost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OmanikuEpost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rikkumisekuupaev)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rikkumisekuupaev)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KiiruseUletamine)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KiiruseUletamine)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TrahviSuurus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TrahviSuurus)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Traahv")
+        </div>
+    }
+</div>

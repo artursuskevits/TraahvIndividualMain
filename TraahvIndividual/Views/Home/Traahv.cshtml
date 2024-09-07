@@ -1,0 +1,38 @@
+﻿@model IEnumerable<TraahvIndividual.Models.Traahv>
+
+@{
+    ViewBag.Title = "Traahv";
+}
+
+<h2>Traahv</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateTraahv")
+</p>
+<table class="table">
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.SoidukeNumber)</th>
+        <th>@Html.DisplayNameFor(model => model.OmanikuNimi)</th>
+        <th>@Html.DisplayNameFor(model => model.OmanikuEpost)</th>
+        <th>@Html.DisplayNameFor(model => model.Rikkumisekuupaev)</th>
+        <th>@Html.DisplayNameFor(model => model.KiiruseUletamine)</th>
+        <th>@Html.DisplayNameFor(model => model.TrahviSuurus)</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.SoidukeNumber)</td>
+            <td>@Html.DisplayFor(modelItem => item.OmanikuNimi)</td>
+            <td>@Html.DisplayFor(modelItem => item.OmanikuEpost)</td>
+            <td>@Html.DisplayFor(modelItem => item.Rikkumisekuupaev)</td>
+            <td>@Html.DisplayFor(modelItem => item.KiiruseUletamine)</td>
+            <td>@Html.DisplayFor(modelItem => item.TrahviSuurus)</td>
+            <td>
+                @Html.ActionLink("Edit", "EditTraahv", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "DeleteTraahv", new { id = item.Id })
+            </td>
+        </tr>
+    }
+</table>
