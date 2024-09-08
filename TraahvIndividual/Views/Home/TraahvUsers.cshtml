@@ -6,7 +6,7 @@
 
 <h2>Traahv</h2>
 <div class="col-md-8">
-    <form method="get" action="@Url.Action("Index", "Home")">
+    <form method="get" action="@Url.Action("TraahvUsers", "Home")">
         <div class="form-group">
             <label for="searchCarNumber">Search by Car Number:</label>
             <input type="text" name="searchCarNumber" class="form-control" placeholder="Enter Car Number" value="@Request.QueryString["searchCarNumber"]" />
@@ -37,6 +37,9 @@
             <td>@Html.DisplayFor(modelItem => item.Rikkumisekuupaev)</td>
             <td>@Html.DisplayFor(modelItem => item.KiiruseUletamine)</td>
             <td>@Html.DisplayFor(modelItem => item.TrahviSuurus)</td>
+            <td>
+                @Html.ActionLink("Detail", "DetailTrahv", new { id = item.Id }) 
+            </td>
         </tr>
     }
 </table>

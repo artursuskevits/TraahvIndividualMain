@@ -5,26 +5,28 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TraahvIndividual.Models;
-using System;
 using System.Net;
 using System.Net.Mail;
+using OfficeOpenXml;
+using OfficeOpenXml.Table;
 
 namespace TraahvIndividual.Controllers
 {
     public class HomeController : Controller
     {
         TrahvidContext db = new TrahvidContext();
-        public ActionResult Index(string searchCarNumber = null)
+        public ActionResult Index()
         {
-            var penalties = db.Traahv.AsQueryable();  // Запрос к базе данных
+            //var penalties = db.Traahv.AsQueryable();  // Запрос к базе данных
 
-            // Если введен номер машины для поиска, отфильтруем результаты
-            if (!string.IsNullOrEmpty(searchCarNumber))
-            {
-                penalties = penalties.Where(p => p.SoidukeNumber.Contains(searchCarNumber));
-            }
+            //// Если введен номер машины для поиска, отфильтруем результаты
+            //if (!string.IsNullOrEmpty(searchCarNumber))
+            //{
+            //    penalties = penalties.Where(p => p.SoidukeNumber.Contains(searchCarNumber));
+            //}
 
-            return View(penalties.ToList());  // Возвращаем результат в представление
+            //return View(penalties.ToList());  // Возвращаем результат в представление
+            return View();
         }
 
 
@@ -41,17 +43,24 @@ namespace TraahvIndividual.Controllers
 
             return View();
         }
-        [AuthorizeUser("Admin2@gmail.com")]
+        //[AuthorizeUser("Admin2@gmail.com")]
         public ActionResult Traahv()
         {
             IEnumerable<Traahv> traahvs = db.Traahv.ToList();
             return View(traahvs);
         }
-        [Authorize]
-        public ActionResult TraahvUsers()
+        //[Authorize]
+        public ActionResult TraahvUsers(string searchCarNumber = null)
         {
-            IEnumerable<Traahv> traahvs = db.Traahv.ToList();
-            return View(traahvs);
+            var penalties = db.Traahv.AsQueryable();  // Запрос к базе данных
+
+            // Если введен номер машины для поиска, отфильтруем результаты
+            if (!string.IsNullOrEmpty(searchCarNumber))
+            {
+                penalties = penalties.Where(p => p.SoidukeNumber.Contains(searchCarNumber));
+            }
+
+            return View(penalties.ToList());
         }
         [HttpGet]
         public ActionResult CreateTraahv()
@@ -125,6 +134,76 @@ namespace TraahvIndividual.Controllers
 
         //    return View(penalties.ToList());  // Возвращаем результат в представление
         //}
+        public ActionResult TrahvSearch(string searchCarNumber = null)
+        {
+            var penalties = db.Traahv.AsQueryable();  // Запрос к базе данных
+
+            // Если введен номер машины для поиска, отфильтруем результаты
+            if (!string.IsNullOrEmpty(searchCarNumber))
+            {
+                penalties = penalties.Where(p => p.SoidukeNumber.Contains(searchCarNumber));
+            }
+
+            return View(penalties.ToList());  // Возвращаем результат в представление
+        }
+        [HttpGet]
+        public ActionResult DetailTrahv(int id)
+        {
+            Traahv g = db.Traahv.Find(id);
+            if (g == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(g);
+        }
+        public ActionResult ExportToExcel()
+        {
+            var traahvData = GetTraahvData();
+
+            // Устанавливаем лицензию
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Traahv Data");
+
+                // Добавляем заголовки
+                worksheet.Cells[1, 1].Value = "Soiduke Number";
+                worksheet.Cells[1, 2].Value = "Omaniku Nimi";
+                worksheet.Cells[1, 3].Value = "Omaniku Epost";
+                worksheet.Cells[1, 4].Value = "Rikkumise kuupaev";
+                worksheet.Cells[1, 5].Value = "Kiiruse Uletamine";
+                worksheet.Cells[1, 6].Value = "Trahvi Suurus";
+
+                // Заполняем данные
+                int row = 2;
+                foreach (var item in traahvData)
+                {
+                    worksheet.Cells[row, 1].Value = item.SoidukeNumber;
+                    worksheet.Cells[row, 2].Value = item.OmanikuNimi;
+                    worksheet.Cells[row, 3].Value = item.OmanikuEpost;
+                    worksheet.Cells[row, 4].Value = item.Rikkumisekuupaev.ToString("yyyy-MM-dd");
+                    worksheet.Cells[row, 5].Value = item.KiiruseUletamine;
+                    worksheet.Cells[row, 6].Value = item.TrahviSuurus;
+                    row++;
+                }
+
+                // Генерируем и возвращаем Excel-файл
+                var excelData = package.GetAsByteArray();
+                return File(excelData, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Trahvid.xlsx");
+            }
+        }
+
+        private IEnumerable<Traahv> GetTraahvData()
+        {
+            
+            return new List<Traahv>
+        {
+            new Traahv { SoidukeNumber = "123ABC", OmanikuNimi = "John Doe", OmanikuEpost = "john@example.com", Rikkumisekuupaev = DateTime.Now, KiiruseUletamine = 10, TrahviSuurus = 50 },
+           
+        };
+        }
 
     }
 
