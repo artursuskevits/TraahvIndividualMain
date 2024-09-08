@@ -3,7 +3,7 @@
     ViewBag.Title = "Register";
 }
 
-<main aria-labelledby="title">
+<main aria-labelledby="title" style="color: white; background: rgba(97, 1, 1, 1); border-radius: 20px; padding:10px;">
     <h2 id="title">@ViewBag.Title.</h2>
 
     @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form" }))
@@ -32,7 +32,7 @@
         </div>
         <div class="row">
             <div class="offset-md-2 col-md-10">
-                <input type="submit" value="Register" class="btn btn-outline-dark" />
+                <input type="submit" value="Registreeri" class="btn btn-outline-dark" style="color: white; background-color: #ad0505; border: solid #ad0505 1px; margin-top: 10px;"/>
             </div>
         </div>
     }

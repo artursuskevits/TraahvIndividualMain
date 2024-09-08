@@ -4,9 +4,9 @@
     ViewBag.Title = "Traahv";
 }
 
-<main style="color: white; background: rgba(97, 1, 1, 0.7); border-radius: 20px; padding:10px;">
+<main style="color: white; background: rgba(97, 1, 1, 1); border-radius: 20px; padding:10px;">
     <h2>Traahvid</h2>
-    <table class="table" style="color:white;">
+    <table class="table" style="color: rgba(255, 255, 255, 0.7);">
         <tr>
             <th>@Html.DisplayNameFor(model => model.SoidukeNumber)</th>
             <th>@Html.DisplayNameFor(model => model.OmanikuNimi)</th>
@@ -28,9 +28,9 @@
                 <td>@Html.DisplayFor(modelItem => item.TrahviSuurus)</td>
                 <td>
                     @Html.ActionLink("Muuda", "EditTraahv", new { id = item.Id }, new
-                    { @class = "btn btn-primary btn-md", style = "background-color: #ad0505; border: solid #ad0505 1px;" }) |
+                    { @class = "btn btn-primary btn-md", style = "background-color: #ad0505; border: solid #ad0505 1px; opacity: 1; !important" }) |
                     @Html.ActionLink("Kustuta", "DeleteTraahv", new { id = item.Id }, new
-                    { @class = "btn btn-primary btn-md", style = "background-color: #ad0505; border: solid #ad0505 1px;" })
+                    { @class = "btn btn-primary btn-md", style = "background-color: #ad0505; border: solid #ad0505 1px; opacity: 1; !important" })
                 </td>
             </tr>
         }
