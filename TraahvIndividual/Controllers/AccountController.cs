@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -55,9 +57,18 @@ namespace TraahvIndividual.Controllers
         //
         // GET: /Account/Login
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
+        public ActionResult Login(string returnUrl, string lang)
         {
             ViewBag.ReturnUrl = returnUrl;
+            string selectedLang = !string.IsNullOrEmpty(lang) ? lang : "est";
+            ViewBag.Language = selectedLang;
+
+            // Устанавливаем язык в HttpContext
+            CultureInfo newCulture = new CultureInfo(selectedLang);
+            Thread.CurrentThread.CurrentCulture = newCulture;
+            Thread.CurrentThread.CurrentUICulture = newCulture;
+            HttpContext.Items["lang"] = selectedLang;
+
             return View();
         }
 
@@ -137,8 +148,17 @@ namespace TraahvIndividual.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Register()
+        public ActionResult Register(string lang)
         {
+            string selectedLang = !string.IsNullOrEmpty(lang) ? lang : "est";
+            ViewBag.Language = selectedLang;
+
+            // Устанавливаем язык в HttpContext
+            CultureInfo newCulture = new CultureInfo(selectedLang);
+            Thread.CurrentThread.CurrentCulture = newCulture;
+            Thread.CurrentThread.CurrentUICulture = newCulture;
+            HttpContext.Items["lang"] = selectedLang;
+
             return View();
         }
         

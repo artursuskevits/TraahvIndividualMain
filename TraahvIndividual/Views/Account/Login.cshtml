@@ -1,18 +1,36 @@
 ﻿@using TraahvIndividual.Models
-@model LoginViewModel
+@model TraahvIndividual.Models.LoginViewModel
 @{
-    ViewBag.Title = "Log in";
+    ViewBag.Title = ViewBag.Language == "ru" ? "Вход" : ViewBag.Language == "eng" ? "Log in" : "Logi sisse";
 }
 
 <main aria-labelledby="title">
-    <h2 id="title">@ViewBag.Title.</h2>
+    <div id="language-buttons" style="margin-bottom: 20px;">
+        <button onclick="setLanguage('ru')">Русский язык</button>
+        <button onclick="setLanguage('est')">Eesti keel</button>
+        <button onclick="setLanguage('eng')">English</button>
+    </div>
+    <h2 id="title">@ViewBag.Title</h2>
     <div class="row">
         <div class="col-md-8">
             <section id="loginForm">
                 @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
                 {
                     @Html.AntiForgeryToken()
-                    <h4>Use a local account to log in.</h4>
+                    <h4>
+                        @if (ViewBag.Language == "ru")
+                        {
+                            @:Войдите с помощью локальной учетной записи.
+                        }
+                        else if (ViewBag.Language == "eng")
+                        {
+                            @:Use a local account to log in.
+                        }
+                        else
+                        {
+                            @:Logi sisse kohaliku kontoga.
+                        }
+                    </h4>
                     <hr />
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="row">
@@ -39,16 +57,18 @@
                     </div>
                     <div class="row">
                         <div class="offset-md-2 col-md-10">
-                            <input type="submit" value="Log in" class="btn btn-outline-dark" />
+                            <input type="submit" value="@(
+                                ViewBag.Language == "ru" ? "Войти" :
+                                ViewBag.Language == "eng" ? "Log in" : "Logi sisse"
+                            )" class="btn btn-outline-dark" />
                         </div>
                     </div>
                     <p>
-                        @Html.ActionLink("Register as a new user", "Register")
+                        @Html.ActionLink(
+                            ViewBag.Language == "ru" ? "Зарегистрироваться как новый пользователь" :
+                            ViewBag.Language == "eng" ? "Register as a new user" : "Registreeri uue kasutajana",
+                            "Register")
                     </p>
-                    @* Enable this once you have account confirmation enabled for password reset functionality
-                        <p>
-                            @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                        </p>*@
                 }
             </section>
         </div>
@@ -63,3 +83,11 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+<script type="text/javascript">
+    function setLanguage(lang) {
+        var currentUrl = window.location.href.split('?')[0];
+        var newUrl = currentUrl + (currentUrl.indexOf('?') === -1 ? '?' : '&') + 'lang=' + lang;
+        window.location.href = newUrl;
+    }
+</script>

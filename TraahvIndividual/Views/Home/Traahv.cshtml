@@ -1,39 +1,81 @@
 ﻿@model IEnumerable<TraahvIndividual.Models.Traahv>
 
 @{
-    ViewBag.Title = "Traahv";
+    var translations = ViewBag.Translations as Dictionary<string, string>;
+    string language = ViewBag.Language ?? "est";
 }
 
 <main style="color: white; background: rgba(97, 1, 1, 0.5); border-radius: 20px; padding:10px;">
-    <h2>Traahvid</h2>
+    <div id="language-buttons" style="margin-bottom: 20px;">
+        <button onclick="setLanguage('ru')">Русский язык</button>
+        <button onclick="setLanguage('est')">Eesti keel</button>
+        <button onclick="setLanguage('eng')">English</button>
+    </div>
+    <h2>
+        @if (language == "ru")
+        {
+            @:Штраф
+        }
+        else if (language == "eng")
+        {
+            @:Penalty
+        }
+        else
+        {
+            @:Traahv
+        }
+    </h2>
     <table class="table" style="color:white;">
         <tr>
-            <th>@Html.DisplayNameFor(model => model.SoidukeNumber)</th>
-            <th>@Html.DisplayNameFor(model => model.OmanikuNimi)</th>
-            <th>@Html.DisplayNameFor(model => model.OmanikuEpost)</th>
-            <th>@Html.DisplayNameFor(model => model.Rikkumisekuupaev)</th>
-            <th>@Html.DisplayNameFor(model => model.KiiruseUletamine)</th>
-            <th>@Html.DisplayNameFor(model => model.TrahviSuurus)</th>
+            <th>@translations["VehicleNumber"]</th>
+            <th>@translations["OwnerName"]</th>
+            <th>@translations["OwnerEmail"]</th>
+            <th>@translations["ViolationDate"]</th>
+            <th>@translations["Speeding"]</th>
+            <th>@translations["FineAmount"]</th>
             <th></th>
         </tr>
 
         @foreach (var item in Model)
         {
             <tr>
-                <td>@Html.DisplayFor(modelItem => item.SoidukeNumber)</td>
-                <td>@Html.DisplayFor(modelItem => item.OmanikuNimi)</td>
-                <td>@Html.DisplayFor(modelItem => item.OmanikuEpost)</td>
-                <td>@Html.DisplayFor(modelItem => item.Rikkumisekuupaev)</td>
-                <td>@Html.DisplayFor(modelItem => item.KiiruseUletamine)</td>
-                <td>@Html.DisplayFor(modelItem => item.TrahviSuurus)</td>
+                <td>@item.SoidukeNumber</td>
+                <td>@item.OmanikuNimi</td>
+                <td>@item.OmanikuEpost</td>
+                <td>@item.Rikkumisekuupaev</td>
+                <td>@item.KiiruseUletamine</td>
+                <td>@item.TrahviSuurus</td>
                 <td>
-                    @Html.ActionLink("Muuda", "EditTraahv", new { id = item.Id }, new
-                    { @class = "btn btn-primary btn-md", style = "background-color: #ad0505; border: solid #ad0505 1px;" }) |
-                    @Html.ActionLink("Kustuta", "DeleteTraahv", new { id = item.Id }, new
-                    { @class = "btn btn-primary btn-md", style = "background-color: #ad0505; border: solid #ad0505 1px;" })
+                    @Html.ActionLink(
+                                       translations["Edit"],
+                                       "EditTraahv",
+                                       new { id = item.Id },
+                                       new { @class = "btn btn-primary btn-md", style = "background-color: #ad0505; border: solid #ad0505 1px;" }
+                                   ) |
+                    @Html.ActionLink(
+                                       translations["Delete"],
+                                       "DeleteTraahv",
+                                       new { id = item.Id },
+                                       new { @class = "btn btn-primary btn-md", style = "background-color: #ad0505; border: solid #ad0505 1px;" }
+                                   )
                 </td>
             </tr>
         }
     </table>
-    <p><a href="CreateTraahv" class="btn btn-primary btn-md" style="background-color: #ad0505; border: solid #ad0505 1px; right: 10px; ">Lisa uus &raquo;</a></p>
+    <p>
+        <a href="CreateTraahv" class="btn btn-primary btn-md" style="background-color: #ad0505; border: solid #ad0505 1px; right: 10px;">
+            @translations["AddNew"] &raquo;
+        </a>
+    </p>
 </main>
+
+
+@section scripts {
+    <script type="text/javascript">
+        function setLanguage(lang) {
+            var currentUrl = window.location.href.split('?')[0];
+            var newUrl = currentUrl + (currentUrl.indexOf('?') === -1 ? '?' : '&') + 'lang=' + lang;
+            window.location.href = newUrl;
+        }
+    </script>
+}
