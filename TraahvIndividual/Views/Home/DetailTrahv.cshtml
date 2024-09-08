@@ -4,19 +4,20 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Trahv Informatsion</h2>
-<br />
-<div>
-    <h4>Nimi: @Html.DisplayFor(model => model.SoidukeNumber)</h4>
-    <h4>Epost: @Html.DisplayFor(model => model.OmanikuNimi)</h4>
-    <h4>Number: @Html.DisplayFor(model => model.OmanikuEpost)</h4>
-    <h4>Oslaed: @Html.DisplayFor(model => model.Rikkumisekuupaev)</h4>
-    <h4>Number: @Html.DisplayFor(model => model.KiiruseUletamine)</h4>
-    <h4>Oslaed: @Html.DisplayFor(model => model.TrahviSuurus)</h4>
-    @* Display the Notes field *@
+<main style="color: white; background: rgba(40, 77, 124, 0.7); border-radius: 20px; padding: 20px; ">
+    <h2>Trahv Informatsion</h2>
+    <br />
+    <div>
+        <h4>Nimi: @Html.DisplayFor(model => model.SoidukeNumber)</h4>
+        <h4>Epost: @Html.DisplayFor(model => model.OmanikuNimi)</h4>
+        <h4>Number: @Html.DisplayFor(model => model.OmanikuEpost)</h4>
+        <h4>Oslaed: @Html.DisplayFor(model => model.Rikkumisekuupaev)</h4>
+        <h4>Number: @Html.DisplayFor(model => model.KiiruseUletamine)</h4>
+        <h4>Oslaed: @Html.DisplayFor(model => model.TrahviSuurus)</h4>
+        @* Display the Notes field *@
     
-    </div>
-<p>
-    @Html.ActionLink("TraahvUsers", "Home")
-
-</p>
+        </div>
+    <p>
+        <button class="btn btn-primary btn-md" onclick="location.href='@Url.Action("TraahvUsers")'">Trahvid</button>
+    </p>
+</main>

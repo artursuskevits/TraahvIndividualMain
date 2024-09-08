@@ -3,43 +3,44 @@
 @{
     ViewBag.Title = "Traahv";
 }
+<main style="color: white; background: rgba(40, 77, 124, 0.7); border-radius: 20px; padding: 20px; ">
+    <h2>Traahv</h2>
+    <div class="col-md-8">
+        <form method="get" action="@Url.Action("TraahvUsers", "Home")">
+            <div class="form-group">
+                <label for="searchCarNumber">Search by Car Number:</label>
+                <input type="text" name="searchCarNumber" class="form-control" placeholder="Enter Car Number" value="@Request.QueryString["searchCarNumber"]" />
+                <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Search</button>
+            </div>
+        </form>
+    </div>
 
-<h2>Traahv</h2>
-<div class="col-md-8">
-    <form method="get" action="@Url.Action("TraahvUsers", "Home")">
-        <div class="form-group">
-            <label for="searchCarNumber">Search by Car Number:</label>
-            <input type="text" name="searchCarNumber" class="form-control" placeholder="Enter Car Number" value="@Request.QueryString["searchCarNumber"]" />
-        </div>
-        <button type="submit" class="btn btn-primary">Search</button>
-    </form>
-</div>
-
-<table class="table">
-    <tr>
-        <th>@Html.DisplayNameFor(model => model.SoidukeNumber)</th>
-        <th>@Html.DisplayNameFor(model => model.Rikkumisekuupaev)</th>
-        <th>@Html.DisplayNameFor(model => model.KiiruseUletamine)</th>
-        <th>@Html.DisplayNameFor(model => model.TrahviSuurus)</th>
-    </tr>
-
-    @if (!Model.Any())
-    {
+    <table class="table" style="color: white;">
         <tr>
-            <td colspan="4">No penalties found</td>
+            <th>@Html.DisplayNameFor(model => model.SoidukeNumber)</th>
+            <th>@Html.DisplayNameFor(model => model.Rikkumisekuupaev)</th>
+            <th>@Html.DisplayNameFor(model => model.KiiruseUletamine)</th>
+            <th>@Html.DisplayNameFor(model => model.TrahviSuurus)</th>
         </tr>
-    }
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@Html.DisplayFor(modelItem => item.SoidukeNumber)</td>
-            <td>@Html.DisplayFor(modelItem => item.Rikkumisekuupaev)</td>
-            <td>@Html.DisplayFor(modelItem => item.KiiruseUletamine)</td>
-            <td>@Html.DisplayFor(modelItem => item.TrahviSuurus)</td>
-            <td>
-                @Html.ActionLink("Detail", "DetailTrahv", new { id = item.Id }) 
-            </td>
-        </tr>
-    }
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="4">No penalties found</td>
+            </tr>
+        }
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.SoidukeNumber)</td>
+                <td>@Html.DisplayFor(modelItem => item.Rikkumisekuupaev)</td>
+                <td>@Html.DisplayFor(modelItem => item.KiiruseUletamine)</td>
+                <td>@Html.DisplayFor(modelItem => item.TrahviSuurus)</td>
+                <td>
+                    <button class="btn btn-primary btn-md" onclick="location.href='@Url.Action("DetailTrahv", new { id = item.Id })'">Detail</button> 
+                </td>
+            </tr>
+        }
 </table>
+</main>
