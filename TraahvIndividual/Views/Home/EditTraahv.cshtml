@@ -4,15 +4,12 @@
     ViewBag.Title = "EditTraahv";
 }
 
-<h2>EditTraahv</h2>
-
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
-<div class="form-horizontal">
-    <h4>Traahv</h4>
+<div class="form-horizontal" style="color: white; background: rgba(40, 77, 124, 0.7); border-radius: 20px; padding: 20px;">
+    <h2>Traahvi muudamine</h2>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.Id)
@@ -62,15 +59,12 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
+            <input type="submit" value="Save" class="btn btn-default" style="color: white; background-color: #2D287C; border: solid #2D287C 1px; margin-top: 10px;"/>
+            <a href="~/Home/Traahv" class="btn btn-primary btn-md" style="background-color: #2D287C; border: solid #2D287C 1px; margin-top: 10px;">Back to List</a>
         </div>
     </div>
 </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Traahv")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

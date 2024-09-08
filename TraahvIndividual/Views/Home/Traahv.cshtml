@@ -4,7 +4,7 @@
     ViewBag.Title = "Traahv";
 }
 
-<main style="color: white; background: rgba(97, 1, 1, 1); border-radius: 20px; padding:10px;">
+<main style="color: white; background: rgba(40, 77, 124, 0.7); border-radius: 20px; padding: 20px; ">
     <h2>Traahvid</h2>
     <table class="table" style="color: rgba(255, 255, 255, 0.7);">
         <tr>
@@ -28,12 +28,12 @@
                 <td>@Html.DisplayFor(modelItem => item.TrahviSuurus)</td>
                 <td>
                     @Html.ActionLink("Muuda", "EditTraahv", new { id = item.Id }, new
-                    { @class = "btn btn-primary btn-md", style = "background-color: #ad0505; border: solid #ad0505 1px; opacity: 1; !important" }) |
+                    { @class = "btn btn-primary btn-md", style = "background-color: #2D287C; border: solid #2D287C 1px; opacity: 1; !important" }) |
                     @Html.ActionLink("Kustuta", "DeleteTraahv", new { id = item.Id }, new
-                    { @class = "btn btn-primary btn-md", style = "background-color: #ad0505; border: solid #ad0505 1px; opacity: 1; !important" })
+                    { @class = "btn btn-primary btn-md", style = "background-color: #2D287C; border: solid #2D287C 1px; opacity: 1; !important" })
                 </td>
             </tr>
         }
     </table>
-    <p><a href="CreateTraahv" class="btn btn-primary btn-md" style="background-color: #ad0505; border: solid #ad0505 1px; right: 10px; ">Lisa uus &raquo;</a></p>
+    <p><a href="CreateTraahv" class="btn btn-primary btn-md" style="background-color: #2D287C; border: solid #2D287C 1px; right: 10px; ">Lisa uus &raquo;</a></p>
 </main>
