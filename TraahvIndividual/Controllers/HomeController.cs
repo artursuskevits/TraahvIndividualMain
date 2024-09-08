@@ -197,12 +197,10 @@ namespace TraahvIndividual.Controllers
 
         private IEnumerable<Traahv> GetTraahvData()
         {
-            
-            return new List<Traahv>
-        {
-            new Traahv { SoidukeNumber = "123ABC", OmanikuNimi = "John Doe", OmanikuEpost = "john@example.com", Rikkumisekuupaev = DateTime.Now, KiiruseUletamine = 10, TrahviSuurus = 50 },
-           
-        };
+            IEnumerable<Traahv> traahvs = db.Traahv.ToList();
+
+            return traahvs;
+        
         }
 
     }
