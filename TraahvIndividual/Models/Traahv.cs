@@ -12,10 +12,14 @@ namespace TraahvIndividual.Models
     {
         [Key]
         public int Id { get; set; }
+        [StringLength(7, MinimumLength = 7, ErrorMessage = "Vale SoidukeNumber")]
         public string SoidukeNumber { get; set; }
+        [RegularExpression(@"^[a-zA-Zа-яА-ЯёЁ\s]{1,30}$", ErrorMessage = "Vale OmanikuNimi")]
         public string OmanikuNimi { get; set; }
+        [RegularExpression(@".+\@.+\..+", ErrorMessage = "Valesti sisestatud email")]
         public string OmanikuEpost { get; set; }
         public DateTime Rikkumisekuupaev { get; set; }
+        [Range(3, 300, ErrorMessage = "Valesti KiiruseUletamine")]
         public int KiiruseUletamine { get; set; }
 
         public int TrahviSuurus { get; set; }
