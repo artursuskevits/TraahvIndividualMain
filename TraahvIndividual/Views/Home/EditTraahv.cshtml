@@ -1,71 +1,91 @@
 ﻿@model TraahvIndividual.Models.Traahv
 
 @{
-    ViewBag.Title = "EditTraahv";
+    ViewBag.Title = ViewBag.Language == "ru" ? "Редактировать Штраф" : ViewBag.Language == "eng" ? "Edit Penalty" : "Muuda Traahv";
 }
+
+<div id="language-buttons" style="margin-bottom: 20px;">
+    <button onclick="setLanguage('ru')">Русский язык</button>
+    <button onclick="setLanguage('est')">Eesti keel</button>
+    <button onclick="setLanguage('eng')">English</button>
+</div>
+
+<h2>@ViewBag.Title</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-<div class="form-horizontal" style="color: white; background: rgba(40, 77, 124, 0.7); border-radius: 20px; padding: 20px;">
-    <h2>Traahvi muudamine</h2>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.Id)
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.SoidukeNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.SoidukeNumber, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.SoidukeNumber, "", new { @class = "text-danger" })
+    <div class="form-horizontal" style="color: white; background: rgba(40, 77, 124, 0.7); border-radius: 20px; padding: 20px;">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SoidukeNumber, ViewBag.Language == "ru" ? "Номер транспортного средства" : ViewBag.Language == "eng" ? "Vehicle Number" : "Sõiduki Number", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SoidukeNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SoidukeNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.OmanikuNimi, ViewBag.Language == "ru" ? "Имя владельца" : ViewBag.Language == "eng" ? "Owner Name" : "Omaniku Nimi", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.OmanikuNimi, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.OmanikuNimi, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.OmanikuEpost, ViewBag.Language == "ru" ? "Электронная почта владельца" : ViewBag.Language == "eng" ? "Owner Email" : "Omaniku E-post", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.OmanikuEpost, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.OmanikuEpost, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Rikkumisekuupaev, ViewBag.Language == "ru" ? "Дата нарушения" : ViewBag.Language == "eng" ? "Violation Date" : "Rikkumise Kuupäev", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Rikkumisekuupaev, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Rikkumisekuupaev, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.KiiruseUletamine, ViewBag.Language == "ru" ? "Превышение скорости" : ViewBag.Language == "eng" ? "Speeding" : "Kiiruse Ületamine", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.KiiruseUletamine, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.KiiruseUletamine, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="@(
+                    ViewBag.Language == "ru" ? "Сохранить" :
+                    ViewBag.Language == "eng" ? "Save" :
+                    "Salvesta")" class="btn btn-default" style="color: white; background-color: #2D287C; border: solid #2D287C 1px; margin-top: 10px;" />
+                <a href="~/Home/Traahv" class="btn btn-primary btn-md" style="background-color: #2D287C; border: solid #2D287C 1px; margin-top: 10px;">
+                    @(
+                    ViewBag.Language == "ru" ? "Назад к списку" :
+                    ViewBag.Language == "eng" ? "Back to List" :
+                    "Tagasi nimekirja")
+                </a>
+            </div>
         </div>
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.OmanikuNimi, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.OmanikuNimi, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.OmanikuNimi, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.OmanikuEpost, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.OmanikuEpost, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.OmanikuEpost, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Rikkumisekuupaev, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Rikkumisekuupaev, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Rikkumisekuupaev, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.KiiruseUletamine, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.KiiruseUletamine, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.KiiruseUletamine, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-   
-
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" style="color: white; background-color: #2D287C; border: solid #2D287C 1px; margin-top: 10px;"/>
-            <a href="~/Home/Traahv" class="btn btn-primary btn-md" style="background-color: #2D287C; border: solid #2D287C 1px; margin-top: 10px;">Back to List</a>
-        </div>
-    </div>
-</div>
 }
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+<script type="text/javascript">
+    function setLanguage(lang) {
+        var currentUrl = window.location.href.split('?')[0];
+        var newUrl = currentUrl + (currentUrl.indexOf('?') === -1 ? '?' : '&') + 'lang=' + lang;
+        window.location.href = newUrl;
+    }
+</script>

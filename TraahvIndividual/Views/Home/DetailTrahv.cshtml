@@ -1,24 +1,52 @@
 ﻿@model TraahvIndividual.Models.Traahv
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = ViewBag.Language == "ru" ? "Детали" : ViewBag.Language == "eng" ? "Details" : "Detailid";
 }
 
-<main style="color: white; background: rgba(40, 77, 124, 0.7); border-radius: 20px; padding: 20px; ">
-    <h2>Trahv Informatsion</h2>
+<div style="color: white; background: rgba(40, 77, 124, 0.7); border-radius: 20px; padding: 20px;">
+    <div id="language-buttons" style="margin-bottom: 20px;">
+        <button onclick="setLanguage('ru')">Русский язык</button>
+        <button onclick="setLanguage('est')">Eesti keel</button>
+        <button onclick="setLanguage('eng')">English</button>
+    </div>
+
+    <h2>@ViewBag.Title</h2>
     <br />
     <div>
-        <h4>Nimi: @Html.DisplayFor(model => model.SoidukeNumber)</h4>
-        <h4>Epost: @Html.DisplayFor(model => model.OmanikuNimi)</h4>
-        <h4>Number: @Html.DisplayFor(model => model.OmanikuEpost)</h4>
-        <h4>Oslaed: @Html.DisplayFor(model => model.Rikkumisekuupaev)</h4>
-        <h4>Number: @Html.DisplayFor(model => model.KiiruseUletamine)</h4>
-        <h4>Oslaed: @Html.DisplayFor(model => model.TrahviSuurus)</h4>
-        @* Display the Notes field *@
-    
-        </div>
+        <h4>@(ViewBag.Language == "ru" ? "Номер автомобиля:" : ViewBag.Language == "eng" ? "Car Number:" : "Auto number:") @Html.DisplayFor(model => model.SoidukeNumber)</h4>
+        <h4>@(ViewBag.Language == "ru" ? "Имя владельца:" : ViewBag.Language == "eng" ? "Owner Name:" : "Omaniku nimi:") @Html.DisplayFor(model => model.OmanikuNimi)</h4>
+        <h4>@(ViewBag.Language == "ru" ? "Электронная почта:" : ViewBag.Language == "eng" ? "Email:" : "Epost:") @Html.DisplayFor(model => model.OmanikuEpost)</h4>
+        <h4>@(ViewBag.Language == "ru" ? "Дата нарушения:" : ViewBag.Language == "eng" ? "Violation Date:" : "Rikkumisekuupaev:") @Html.DisplayFor(model => model.Rikkumisekuupaev)</h4>
+        <h4>@(ViewBag.Language == "ru" ? "Превышение скорости:" : ViewBag.Language == "eng" ? "Speeding:" : "Kiiruseületamine:") @Html.DisplayFor(model => model.KiiruseUletamine)</h4>
+        <h4>@(ViewBag.Language == "ru" ? "Размер штрафа:" : ViewBag.Language == "eng" ? "Fine Amount:" : "Trahvi suurus:") @Html.DisplayFor(model => model.TrahviSuurus)</h4>
+    </div>
+
     <p>
-        <button class="btn btn-primary btn-md" onclick="location.href='@Url.Action("TraahvUsers")'">Trahvid</button>
-        <button class="btn btn-primary btn-md" onclick="location.href='@Url.Action("StripeForm")'">Оплатить штраф</button>
+        @Html.ActionLink(
+            ViewBag.Language == "ru" ? "Назад к списку" :
+            ViewBag.Language == "eng" ? "Back to List" :
+            "Tagasi nimekirja",
+            "TraahvUsers",
+            "Home",
+            new { id = Model.Id, lang = ViewBag.Language },
+            new { @class = "btn btn-default", style = "background-color: #2D287C; border: solid #2D287C 1px; margin-top: 10px;" }
+        )
+        <button class="btn btn-primary btn-md" onclick="location.href='@Url.Action("StripeForm", new { lang = ViewBag.Language })'">
+            @(ViewBag.Language == "ru" ? "Оплатить штраф" :
+              ViewBag.Language == "eng" ? "Pay Penalty" :
+              "Trahvi maksmine")
+        </button>
     </p>
-</main>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        function setLanguage(lang) {
+            var currentUrl = window.location.href.split('?')[0];
+            var newUrl = currentUrl + (currentUrl.indexOf('?') === -1 ? '?' : '&') + 'lang=' + lang;
+            window.location.href = newUrl;
+        }
+    </script>
+}

@@ -1,46 +1,112 @@
 ﻿@model IEnumerable<TraahvIndividual.Models.Traahv>
 
 @{
-    ViewBag.Title = "Traahv";
+    ViewBag.Title = ViewBag.Language == "ru" ? "Штрафы" : ViewBag.Language == "eng" ? "Penalties" : "Trahvid";
 }
-<main style="color: white; background: rgba(40, 77, 124, 0.7); border-radius: 20px; padding: 20px; ">
-    <h2>Traahv</h2>
+<div id="language-buttons" style="margin-bottom: 20px;">
+    <button onclick="setLanguage('ru')">Русский язык</button>
+    <button onclick="setLanguage('est')">Eesti keel</button>
+    <button onclick="setLanguage('eng')">English</button>
+</div>
+
+<main style="color: white; background: rgba(40, 77, 124, 0.7); border-radius: 20px; padding: 20px;">
+    <h2>@ViewBag.Title</h2>
+
     <div class="col-md-8">
         <form method="get" action="@Url.Action("TraahvUsers", "Home")">
             <div class="form-group">
-                <label for="searchCarNumber">Search by Car Number:</label>
-                <input type="text" name="searchCarNumber" class="form-control" placeholder="Enter Car Number" value="@Request.QueryString["searchCarNumber"]" />
-                <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Search</button>
+                <label for="searchCarNumber">
+                    @(ViewBag.Language == "ru" ? "Поиск по номеру машины:" : ViewBag.Language == "eng" ? "Search by Car Number:" : "Otsi auto numbri järgi:")
+                </label>
+                <input type="text" name="searchCarNumber" class="form-control" placeholder="@(
+                    ViewBag.Language == "ru" ? "Введите номер машины" :
+                    ViewBag.Language == "eng" ? "Enter Car Number" :
+                    "Sisestage auto number")"
+                       value="@Request.QueryString["searchCarNumber"]" />
             </div>
+            <button type="submit" class="btn btn-primary" style="margin-top: 10px;">
+                @(ViewBag.Language == "ru" ? "Поиск" : ViewBag.Language == "eng" ? "Search" : "Otsi")
+            </button>
         </form>
     </div>
 
     <table class="table" style="color: white;">
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.SoidukeNumber)</th>
-            <th>@Html.DisplayNameFor(model => model.Rikkumisekuupaev)</th>
-            <th>@Html.DisplayNameFor(model => model.KiiruseUletamine)</th>
-            <th>@Html.DisplayNameFor(model => model.TrahviSuurus)</th>
-        </tr>
-
-        @if (!Model.Any())
-        {
+        <thead>
             <tr>
-                <td colspan="4">No penalties found</td>
+                <th>
+                    @(
+                    ViewBag.Language == "ru" ? "Номер машины" :
+                    ViewBag.Language == "eng" ? "Car Number" :
+                    "Auto Number")
+                </th>
+                <th>
+                    @(
+                    ViewBag.Language == "ru" ? "Дата нарушения" :
+                    ViewBag.Language == "eng" ? "Violation Date" :
+                    "Rikkumise Kuupäev")
+                </th>
+                <th>
+                    @(
+                    ViewBag.Language == "ru" ? "Превышение скорости" :
+                    ViewBag.Language == "eng" ? "Speeding" :
+                    "Kiiruse Ületamine")
+                </th>
+                <th>
+                    @(
+                    ViewBag.Language == "ru" ? "Сумма штрафа" :
+                    ViewBag.Language == "eng" ? "Penalty Amount" :
+                    "Trahvi Suurus")
+                </th>
+                <th>
+                    @(
+                    ViewBag.Language == "ru" ? "Детали" :
+                    ViewBag.Language == "eng" ? "Details" :
+                    "Detailid")
+                </th>
             </tr>
-        }
+        </thead>
+        <tbody>
+            @if (!Model.Any())
+            {
+                <tr>
+                    <td colspan="5">
+                        @(
+                            ViewBag.Language == "ru" ? "Штрафы не найдены" :
+                            ViewBag.Language == "eng" ? "No penalties found" :
+                            "Trahve ei leitud")
+                    </td>
+                </tr>
+            }
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.SoidukeNumber)</td>
-                <td>@Html.DisplayFor(modelItem => item.Rikkumisekuupaev)</td>
-                <td>@Html.DisplayFor(modelItem => item.KiiruseUletamine)</td>
-                <td>@Html.DisplayFor(modelItem => item.TrahviSuurus)</td>
-                <td>
-                    <button class="btn btn-primary btn-md" onclick="location.href='@Url.Action("DetailTrahv", new { id = item.Id })'">Detail</button>
-                </td>
-            </tr>
-        }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.SoidukeNumber)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Rikkumisekuupaev)</td>
+                    <td>@Html.DisplayFor(modelItem => item.KiiruseUletamine)</td>
+                    <td>@Html.DisplayFor(modelItem => item.TrahviSuurus)</td>
+                    <td>
+                        @Html.ActionLink(
+                            ViewBag.Language == "ru" ? "Детали" :
+                            ViewBag.Language == "eng" ? "Detail" :
+                            "Detailid",
+                            "DetailTrahv", new { id = item.Id },
+                            new { @class = "btn btn-primary btn-md" })
+                    </td>
+                </tr>
+            }
+        </tbody>
     </table>
 </main>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script type="text/javascript">
+    function setLanguage(lang) {
+        var currentUrl = window.location.href.split('?')[0];
+        var newUrl = currentUrl + (currentUrl.indexOf('?') === -1 ? '?' : '&') + 'lang=' + lang;
+        window.location.href = newUrl;
+    }
+</script>
