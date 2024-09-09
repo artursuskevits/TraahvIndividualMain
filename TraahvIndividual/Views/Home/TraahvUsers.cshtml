@@ -1,32 +1,76 @@
 ﻿@model IEnumerable<TraahvIndividual.Models.Traahv>
 
 @{
-    ViewBag.Title = "Traahv";
+    ViewBag.Title = ViewBag.Language == "ru" ? "Штрафы" : ViewBag.Language == "eng" ? "Penalties" : "Trahvid";
 }
+<div id="language-buttons" style="margin-bottom: 20px;">
+    <button onclick="setLanguage('ru')">Русский язык</button>
+    <button onclick="setLanguage('est')">Eesti keel</button>
+    <button onclick="setLanguage('eng')">English</button>
+</div>
+<h2>@ViewBag.Title</h2>
 
-<h2>Traahv</h2>
 <div class="col-md-8">
     <form method="get" action="@Url.Action("TraahvUsers", "Home")">
         <div class="form-group">
-            <label for="searchCarNumber">Search by Car Number:</label>
-            <input type="text" name="searchCarNumber" class="form-control" placeholder="Enter Car Number" value="@Request.QueryString["searchCarNumber"]" />
+            <label for="searchCarNumber">
+                @(ViewBag.Language == "ru" ? "Поиск по номеру машины:" : ViewBag.Language == "eng" ? "Search by Car Number:" : "Otsi auto numbri järgi:")
+            </label>
+            <input type="text" name="searchCarNumber" class="form-control" placeholder="@(
+                ViewBag.Language == "ru" ? "Введите номер машины" :
+                ViewBag.Language == "eng" ? "Enter Car Number" :
+                "Sisestage auto number")"
+                   value="@Request.QueryString["searchCarNumber"]" />
         </div>
-        <button type="submit" class="btn btn-primary">Search</button>
+        <button type="submit" class="btn btn-primary">
+            @(ViewBag.Language == "ru" ? "Поиск" : ViewBag.Language == "eng" ? "Search" : "Otsi")
+        </button>
     </form>
 </div>
 
 <table class="table">
     <tr>
-        <th>@Html.DisplayNameFor(model => model.SoidukeNumber)</th>
-        <th>@Html.DisplayNameFor(model => model.Rikkumisekuupaev)</th>
-        <th>@Html.DisplayNameFor(model => model.KiiruseUletamine)</th>
-        <th>@Html.DisplayNameFor(model => model.TrahviSuurus)</th>
+        <th>
+            @(
+            ViewBag.Language == "ru" ? "Номер машины" :
+            ViewBag.Language == "eng" ? "Car Number" :
+            "Auto Number")
+        </th>
+        <th>
+            @(
+            ViewBag.Language == "ru" ? "Дата нарушения" :
+            ViewBag.Language == "eng" ? "Violation Date" :
+            "Rikkumise Kuupäev")
+        </th>
+        <th>
+            @(
+            ViewBag.Language == "ru" ? "Превышение скорости" :
+            ViewBag.Language == "eng" ? "Speeding" :
+            "Kiiruse Ületamine")
+        </th>
+        <th>
+            @(
+            ViewBag.Language == "ru" ? "Сумма штрафа" :
+            ViewBag.Language == "eng" ? "Penalty Amount" :
+            "Trahvi Suurus")
+        </th>
+        <th>
+            @(
+            ViewBag.Language == "ru" ? "Детали" :
+            ViewBag.Language == "eng" ? "Details" :
+            "Detailid")
+        </th>
     </tr>
 
     @if (!Model.Any())
     {
         <tr>
-            <td colspan="4">No penalties found</td>
+            <td colspan="5">
+                @(
+                    ViewBag.Language == "ru" ? "Штрафы не найдены" :
+                    ViewBag.Language == "eng" ? "No penalties found" :
+                    "Trahve ei leitud")
+            </td>
         </tr>
     }
 
@@ -38,8 +82,16 @@
             <td>@Html.DisplayFor(modelItem => item.KiiruseUletamine)</td>
             <td>@Html.DisplayFor(modelItem => item.TrahviSuurus)</td>
             <td>
-                @Html.ActionLink("Detail", "DetailTrahv", new { id = item.Id }) 
+                @Html.ActionLink(ViewBag.Language == "ru" ? "Детали" : ViewBag.Language == "eng" ? "Detail" : "Detailid",
+                                 "DetailTrahv", new { id = item.Id })
             </td>
         </tr>
     }
 </table>
+<script type="text/javascript">
+    function setLanguage(lang) {
+        var currentUrl = window.location.href.split('?')[0];
+        var newUrl = currentUrl + (currentUrl.indexOf('?') === -1 ? '?' : '&') + 'lang=' + lang;
+        window.location.href = newUrl;
+    }
+</script>

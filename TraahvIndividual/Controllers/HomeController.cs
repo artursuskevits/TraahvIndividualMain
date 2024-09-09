@@ -100,7 +100,7 @@ namespace TraahvIndividual.Controllers
             return View(traahvs);
         }
         //[Authorize]
-        public ActionResult TraahvUsers(string searchCarNumber = null)
+        public ActionResult TraahvUsers(string lang = "est", string searchCarNumber = null)
         {
             var penalties = db.Traahv.AsQueryable();  // Запрос к базе данных
 
@@ -110,11 +110,29 @@ namespace TraahvIndividual.Controllers
                 penalties = penalties.Where(p => p.SoidukeNumber.Contains(searchCarNumber));
             }
 
+            string selectedLang = lang;
+            ViewBag.Language = selectedLang;
+
+            // Устанавливаем язык в HttpContext
+            CultureInfo newCulture = new CultureInfo(selectedLang);
+            Thread.CurrentThread.CurrentCulture = newCulture;
+            Thread.CurrentThread.CurrentUICulture = newCulture;
+            HttpContext.Items["lang"] = selectedLang;
+
             return View(penalties.ToList());
         }
+
         [HttpGet]
-        public ActionResult CreateTraahv()
+        public ActionResult CreateTraahv(string lang)
         {
+            string selectedLang = !string.IsNullOrEmpty(lang) ? lang : "est";
+            ViewBag.Language = selectedLang;
+
+            // Устанавливаем язык в HttpContext
+            CultureInfo newCulture = new CultureInfo(selectedLang);
+            Thread.CurrentThread.CurrentCulture = newCulture;
+            Thread.CurrentThread.CurrentUICulture = newCulture;
+            HttpContext.Items["lang"] = selectedLang;
 
             return View();
         }
@@ -130,7 +148,7 @@ namespace TraahvIndividual.Controllers
         }
 
         [HttpGet]
-        public ActionResult EditTraahv(int? id)
+        public ActionResult EditTraahv(int? id, string lang)
         {
             Traahv g = db.Traahv.Find(id);
             if (g == null)
@@ -138,6 +156,14 @@ namespace TraahvIndividual.Controllers
                 return HttpNotFound();
 
             }
+            string selectedLang = !string.IsNullOrEmpty(lang) ? lang : "est";
+            ViewBag.Language = selectedLang;
+
+            // Устанавливаем язык в HttpContext
+            CultureInfo newCulture = new CultureInfo(selectedLang);
+            Thread.CurrentThread.CurrentCulture = newCulture;
+            Thread.CurrentThread.CurrentUICulture = newCulture;
+            HttpContext.Items["lang"] = selectedLang;
             return View(g);
         }
         [HttpPost, ActionName("EditTraahv")]
@@ -149,7 +175,7 @@ namespace TraahvIndividual.Controllers
             return RedirectToAction("Traahv");
         }
 
-        public ActionResult DeleteTraahv(int id)
+        public ActionResult DeleteTraahv(int id, string lang)
         {
             Traahv d = db.Traahv.Find(id);
             if (d == null)
@@ -157,6 +183,14 @@ namespace TraahvIndividual.Controllers
                 return HttpNotFound();
 
             }
+            string selectedLang = !string.IsNullOrEmpty(lang) ? lang : "est";
+            ViewBag.Language = selectedLang;
+
+            // Устанавливаем язык в HttpContext
+            CultureInfo newCulture = new CultureInfo(selectedLang);
+            Thread.CurrentThread.CurrentCulture = newCulture;
+            Thread.CurrentThread.CurrentUICulture = newCulture;
+            HttpContext.Items["lang"] = selectedLang;
             return View(d);
         }
         [HttpPost, ActionName("DeleteTraahv")]
@@ -197,7 +231,7 @@ namespace TraahvIndividual.Controllers
             return View(penalties.ToList());  // Возвращаем результат в представление
         }
         [HttpGet]
-        public ActionResult DetailTrahv(int id)
+        public ActionResult DetailTrahv(int id, string lang)
         {
             Traahv g = db.Traahv.Find(id);
             if (g == null)
@@ -205,8 +239,18 @@ namespace TraahvIndividual.Controllers
                 return HttpNotFound();
             }
 
+            string selectedLang = !string.IsNullOrEmpty(lang) ? lang : "est";
+            ViewBag.Language = selectedLang;
+
+            // Устанавливаем язык в HttpContext
+            CultureInfo newCulture = new CultureInfo(selectedLang);
+            Thread.CurrentThread.CurrentCulture = newCulture;
+            Thread.CurrentThread.CurrentUICulture = newCulture;
+            HttpContext.Items["lang"] = selectedLang;
+
             return View(g);
         }
+
         public ActionResult ExportToExcel()
         {
             var traahvData = GetTraahvData();

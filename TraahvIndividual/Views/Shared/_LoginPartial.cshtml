@@ -15,8 +15,23 @@
 }
 else
 {
-    <ul class="navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class="nav-link" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class="nav-link" })</li>
-    </ul>
+<ul class="navbar-nav navbar-right">
+    <li>
+        @Html.ActionLink(
+        ViewBag.Language == "ru" ? "Регистрация" : ViewBag.Language == "eng" ? "Register" : "Registreerimine",
+        "Register",
+        "Account",
+        new { lang = ViewBag.Language },  // Передача параметра языка
+        new { id = "registerLink", @class = "nav-link" })
+    </li>
+
+    <li>
+        @Html.ActionLink(
+        ViewBag.Language == "ru" ? "Логин" : ViewBag.Language == "eng" ? "Log in" : "Logi sisse",
+        "Login",   // Убедитесь, что используете правильное действие для входа
+        "Account",
+        new { lang = ViewBag.Language },  // Передача параметра языка
+        new { @class = "nav-link" })
+    </li>
+</ul>
 }
