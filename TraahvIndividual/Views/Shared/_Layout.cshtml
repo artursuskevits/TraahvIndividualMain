@@ -11,16 +11,40 @@
 <body background="~/Content/Images/church_1.png" style="background-size: 100% 100vh;">
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-opacity-75" style="background-color: #28777C; margin-bottom: 30px; margin-top: 48px; ">
         <div class="container" style="background-color: #28777C; height: 100px; ">
-            @Html.ActionLink("Trahvide register", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+           
             <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Traahvid", "TraahvUsers", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Traahvid Admin", "Traahv", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>
+                        @Html.ActionLink(
+                            ViewBag.Language == "ru" ? "Главная" : ViewBag.Language == "eng" ? "Home" : "Avaleht",
+                            "Index",
+                            "Home",
+                            new { lang = ViewBag.Language },
+                            new { @class = "nav-link" }
+                        )
+                    </li>
+                    <li>
+                        @Html.ActionLink(
+                            ViewBag.Language == "ru" ? "Штрафы" : ViewBag.Language == "eng" ? "Penalties" : "Traahvid",
+                            "Traahv",
+                            "Home",
+                            new { lang = ViewBag.Language },
+                            new { @class = "nav-link" }
+                        )
+                    </li>
+                    <li>
+                        @Html.ActionLink(
+                            ViewBag.Language == "ru" ? "Админ панель" : ViewBag.Language == "eng" ? "Admin panel" : "Administraatori paneel",
+                            "Traahv",
+                            "Home",
+                            new { lang = ViewBag.Language },
+                            new { @class = "nav-link" }
+                        )
+                    </li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
