@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "Оплата штрафа";
+}
+
+<h2>Оплата штрафа</h2>
+
+<form action="@Url.Action("Charge", "Home")" method="post">
+    <label for="card">Номер карты:</label>
+    <input type="text" id="card" name="card" />
+
+    <label for="expiry">Срок действия:</label>
+    <input type="text" id="expiry" name="expiry" />
+
+    <label for="cvc">CVC:</label>
+    <input type="text" id="cvc" name="cvc" />
+
+    <button type="submit">Оплатить</button>
+</form>

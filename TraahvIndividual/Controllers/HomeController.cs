@@ -11,6 +11,7 @@ using OfficeOpenXml;
 using OfficeOpenXml.Table;
 using System.Globalization;
 using System.Threading;
+using Stripe;
 
 namespace TraahvIndividual.Controllers
 {
@@ -252,7 +253,42 @@ namespace TraahvIndividual.Controllers
             return traahvs;
 
         }
+        
+            public ActionResult Charge()
+            {
+            StripeConfiguration.ApiKey = "sk_test_51PxGMLKVor0wWlI4O9xOczq92pZFhgIEcSfBD3E8LoYcSrKQ7T0m5Uf4PGggZoyG3Y4uwaNM3xM0NVKECbqqRjrz00ptuxVs70";
 
+            // В реальном проекте token должен быть сгенерирован Stripe
+            var token = "test_token"; // Тестовый токен
+
+                var options = new ChargeCreateOptions
+                {
+                    Amount = 2000, // Сумма в центах (например, $20.00)
+                    Currency = "usd",
+                    Description = "Test Payment",
+                    Source = token,
+                };
+
+                var service = new ChargeService();
+                Charge charge = service.Create(options);
+
+                if (charge.Status == "succeeded")
+                {
+                    // Платёж прошёл успешно
+                    return Content("Платёж успешно завершён!");
+                }
+                else
+                {
+                    // Ошибка платежа
+                    return Content("Ошибка при оплате.");
+                }
+            }
+            public ActionResult StripeForm()
+            {
+                return View();
+            }
+
+        
     }
 
 
