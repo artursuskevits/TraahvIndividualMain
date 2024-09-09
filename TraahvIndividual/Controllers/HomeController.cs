@@ -101,7 +101,7 @@ namespace TraahvIndividual.Controllers
             return View(traahvs);
         }
         //[Authorize]
-        public ActionResult TraahvUsers(string searchCarNumber = null)
+        public ActionResult TraahvUsers(string lang = "est", string searchCarNumber = null)
         {
             var penalties = db.Traahv.AsQueryable();  // Запрос к базе данных
 
@@ -111,11 +111,29 @@ namespace TraahvIndividual.Controllers
                 penalties = penalties.Where(p => p.SoidukeNumber.Contains(searchCarNumber));
             }
 
+            string selectedLang = lang;
+            ViewBag.Language = selectedLang;
+
+            // Устанавливаем язык в HttpContext
+            CultureInfo newCulture = new CultureInfo(selectedLang);
+            Thread.CurrentThread.CurrentCulture = newCulture;
+            Thread.CurrentThread.CurrentUICulture = newCulture;
+            HttpContext.Items["lang"] = selectedLang;
+
             return View(penalties.ToList());
         }
+
         [HttpGet]
-        public ActionResult CreateTraahv()
+        public ActionResult CreateTraahv(string lang)
         {
+            string selectedLang = !string.IsNullOrEmpty(lang) ? lang : "est";
+            ViewBag.Language = selectedLang;
+
+            // Устанавливаем язык в HttpContext
+            CultureInfo newCulture = new CultureInfo(selectedLang);
+            Thread.CurrentThread.CurrentCulture = newCulture;
+            Thread.CurrentThread.CurrentUICulture = newCulture;
+            HttpContext.Items["lang"] = selectedLang;
 
             return View();
         }
@@ -131,7 +149,7 @@ namespace TraahvIndividual.Controllers
         }
 
         [HttpGet]
-        public ActionResult EditTraahv(int? id)
+        public ActionResult EditTraahv(int? id, string lang)
         {
             Traahv g = db.Traahv.Find(id);
             if (g == null)
@@ -139,6 +157,14 @@ namespace TraahvIndividual.Controllers
                 return HttpNotFound();
 
             }
+            string selectedLang = !string.IsNullOrEmpty(lang) ? lang : "est";
+            ViewBag.Language = selectedLang;
+
+            // Устанавливаем язык в HttpContext
+            CultureInfo newCulture = new CultureInfo(selectedLang);
+            Thread.CurrentThread.CurrentCulture = newCulture;
+            Thread.CurrentThread.CurrentUICulture = newCulture;
+            HttpContext.Items["lang"] = selectedLang;
             return View(g);
         }
         [HttpPost, ActionName("EditTraahv")]
@@ -150,7 +176,7 @@ namespace TraahvIndividual.Controllers
             return RedirectToAction("Traahv");
         }
 
-        public ActionResult DeleteTraahv(int id)
+        public ActionResult DeleteTraahv(int id, string lang)
         {
             Traahv d = db.Traahv.Find(id);
             if (d == null)
@@ -158,6 +184,14 @@ namespace TraahvIndividual.Controllers
                 return HttpNotFound();
 
             }
+            string selectedLang = !string.IsNullOrEmpty(lang) ? lang : "est";
+            ViewBag.Language = selectedLang;
+
+            // Устанавливаем язык в HttpContext
+            CultureInfo newCulture = new CultureInfo(selectedLang);
+            Thread.CurrentThread.CurrentCulture = newCulture;
+            Thread.CurrentThread.CurrentUICulture = newCulture;
+            HttpContext.Items["lang"] = selectedLang;
             return View(d);
         }
         [HttpPost, ActionName("DeleteTraahv")]
@@ -198,7 +232,7 @@ namespace TraahvIndividual.Controllers
             return View(penalties.ToList());  // Возвращаем результат в представление
         }
         [HttpGet]
-        public ActionResult DetailTrahv(int id)
+        public ActionResult DetailTrahv(int id, string lang)
         {
             Traahv g = db.Traahv.Find(id);
             if (g == null)
@@ -206,8 +240,18 @@ namespace TraahvIndividual.Controllers
                 return HttpNotFound();
             }
 
+            string selectedLang = !string.IsNullOrEmpty(lang) ? lang : "est";
+            ViewBag.Language = selectedLang;
+
+            // Устанавливаем язык в HttpContext
+            CultureInfo newCulture = new CultureInfo(selectedLang);
+            Thread.CurrentThread.CurrentCulture = newCulture;
+            Thread.CurrentThread.CurrentUICulture = newCulture;
+            HttpContext.Items["lang"] = selectedLang;
+
             return View(g);
         }
+
         public ActionResult ExportToExcel()
         {
             var traahvData = GetTraahvData();
@@ -253,42 +297,48 @@ namespace TraahvIndividual.Controllers
             return traahvs;
 
         }
-        
-            public ActionResult Charge()
-            {
+
+        public ActionResult Charge()
+        {
             StripeConfiguration.ApiKey = "sk_test_51PxGMLKVor0wWlI4O9xOczq92pZFhgIEcSfBD3E8LoYcSrKQ7T0m5Uf4PGggZoyG3Y4uwaNM3xM0NVKECbqqRjrz00ptuxVs70";
 
             // В реальном проекте token должен быть сгенерирован Stripe
             var token = "test_token"; // Тестовый токен
 
-                var options = new ChargeCreateOptions
-                {
-                    Amount = 2000, // Сумма в центах (например, $20.00)
-                    Currency = "usd",
-                    Description = "Test Payment",
-                    Source = token,
-                };
-
-                var service = new ChargeService();
-                Charge charge = service.Create(options);
-
-                if (charge.Status == "succeeded")
-                {
-                    // Платёж прошёл успешно
-                    return Content("Платёж успешно завершён!");
-                }
-                else
-                {
-                    // Ошибка платежа
-                    return Content("Ошибка при оплате.");
-                }
-            }
-            public ActionResult StripeForm()
+            var options = new ChargeCreateOptions
             {
-                return View();
-            }
+                Amount = 2000, // Сумма в центах (например, $20.00)
+                Currency = "usd",
+                Description = "Test Payment",
+                Source = token,
+            };
 
-        
+            var service = new ChargeService();
+            Charge charge = service.Create(options);
+
+            if (charge.Status == "succeeded")
+            {
+                // Платёж прошёл успешно
+                return Content("Платёж успешно завершён!");
+            }
+            else
+            {
+                // Ошибка платежа
+                return Content("Ошибка при оплате.");
+            }
+        }
+        public ActionResult StripeForm(string lang)
+        {
+            string selectedLang = !string.IsNullOrEmpty(lang) ? lang : "est";
+            ViewBag.Language = selectedLang;
+
+            // Устанавливаем язык в HttpContext
+            CultureInfo newCulture = new CultureInfo(selectedLang);
+            Thread.CurrentThread.CurrentCulture = newCulture;
+            Thread.CurrentThread.CurrentUICulture = newCulture;
+            HttpContext.Items["lang"] = selectedLang;
+            return View();
+        }
     }
 
 
