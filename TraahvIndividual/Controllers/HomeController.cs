@@ -11,6 +11,7 @@ using OfficeOpenXml;
 using OfficeOpenXml.Table;
 using System.Globalization;
 using System.Threading;
+using Stripe;
 
 namespace TraahvIndividual.Controllers
 {

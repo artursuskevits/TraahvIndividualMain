@@ -29,7 +29,11 @@
         new { id = Model.Id, lang = ViewBag.Language },
         new { @class = "btn btn-default" }
     )
-    <button class="btn btn-primary btn-md" onclick="location.href='@Url.Action("StripeForm")'">Оплатить штраф</button>
+    <button class="btn btn-primary btn-md" onclick="location.href='@Url.Action("StripeForm", new { lang = ViewBag.Language })'">
+        @(ViewBag.Language == "ru" ? "Оплатить штраф" :
+      ViewBag.Language == "eng" ? "Pay Penalty" :
+      "Trahvi maksmine")
+    </button>
 </p>
 
 
