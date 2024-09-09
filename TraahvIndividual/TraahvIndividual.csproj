@@ -292,6 +292,7 @@
     <Content Include="Views\Home\TraahvUsers.cshtml" />
     <Content Include="Views\Home\TrahvSearch.cshtml" />
     <Content Include="Views\Home\DetailTrahv.cshtml" />
+    <Content Include="Views\Home\StripeForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
