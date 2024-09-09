@@ -1,11 +1,70 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    string language = ViewBag.Language ?? "est"; // Устанавливаем язык по умолчанию на английский
 }
 
 <main>
     <section class="row" aria-labelledby="aspnetTitle" style="color: white; background: rgba(40, 77, 124, 0.7); border-radius: 20px; padding: 10px;">
-        <h1 id="title">Trahvide register</h1>
-        <p class="lead" style="opacity: 50;">Trahvide registeris saate vaadata ja maksta oma trahve.</p>
-        <p><a href="https://eteenindus.mnt.ee/public/soidukTaustakontroll.jsf" class="btn btn-primary btn-md" style="background-color: #2D287C; border: solid #2D287C 1px; ">Lisateabe saamine &raquo;</a></p>
-    </section>
+        <div id="language-buttons" style="margin-bottom: 20px;">
+            <button onclick="setLanguage('ru')">Русский язык</button>
+            <button onclick="setLanguage('est')">Eesti keel</button>
+            <button onclick="setLanguage('eng')">English</button>
+        </div>
+
+        <h1 id="title">
+            @if (language == "ru")
+            {
+                @:Реестр штрафов
+            }
+            else if (language == "eng")
+            {
+                @:Trahvide register
+            }
+            else
+            {
+                @:Trahteregister
+            }
+        </h1>
+
+        <p class="lead" style="opacity: 50;">
+            @if (language == "ru")
+            {
+                @:В реестре штрафов вы можете просмотреть и оплатить свои штрафы.
+            }
+            else if (language == "eng")
+            {
+                @:Trahvide registeris saate vaadata ja maksta oma trahve.
+            }
+            else
+            {
+                @:In the fines register, you can view and pay your fines.
+            }
+        </p>
+
+        <p>
+            <a href="https://eteenindus.mnt.ee/public/soidukTaustakontroll.jsf" class="btn btn-primary btn-md" style="background-color: #ad0505; border: solid #ad0505 1px;">
+                @if (language == "ru")
+                {
+                    @:Узнать больше &raquo;
+                }
+                else if (language == "eng")
+                {
+                    @:Lisateave &raquo;
+                }
+                else
+                {
+                    @:Learn more &raquo;
+                }
+            </a>
+        </p>
 </main>
+
+@section scripts {
+    <script type="text/javascript">
+        function setLanguage(lang) {
+            var currentUrl = window.location.href.split('?')[0];
+            var newUrl = currentUrl + (currentUrl.indexOf('?') === -1 ? '?' : '&') + 'lang=' + lang;
+            window.location.href = newUrl;
+        }
+    </script>
+}
