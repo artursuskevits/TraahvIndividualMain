@@ -9,14 +9,27 @@ using System.Net;
 using System.Net.Mail;
 using OfficeOpenXml;
 using OfficeOpenXml.Table;
+using System.Globalization;
+using System.Threading;
 
 namespace TraahvIndividual.Controllers
 {
     public class HomeController : Controller
     {
         TrahvidContext db = new TrahvidContext();
-        public ActionResult Index()
+        public ActionResult Index(string lang)
         {
+
+            string selectedLang = !string.IsNullOrEmpty(lang) ? lang : "est";
+            ViewBag.Language = selectedLang;
+
+            CultureInfo newCulture = new CultureInfo(selectedLang);
+            Thread.CurrentThread.CurrentCulture = newCulture;
+            Thread.CurrentThread.CurrentUICulture = newCulture;
+            HttpContext.Items["lang"] = selectedLang;
+
+            return View();
+
             //var penalties = db.Traahv.AsQueryable();  // Запрос к базе данных
 
             //// Если введен номер машины для поиска, отфильтруем результаты
@@ -26,26 +39,63 @@ namespace TraahvIndividual.Controllers
             //}
 
             //return View(penalties.ToList());  // Возвращаем результат в представление
-            return View();
         }
 
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
 
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
         //[AuthorizeUser("Admin2@gmail.com")]
-        public ActionResult Traahv()
+        public ActionResult Traahv(string lang)
         {
+            var translations = new Dictionary<string, Dictionary<string, string>>
+    {
+        { "ru", new Dictionary<string, string>
+            {
+                { "VehicleNumber", "Номер автомобиля" },
+                { "OwnerName", "Имя владельца" },
+                { "OwnerEmail", "Электронная почта владельца" },
+                { "ViolationDate", "Дата нарушения" },
+                { "Speeding", "Превышение скорости" },
+                { "FineAmount", "Размер штрафа" },
+                { "AddNew", "Добавить новый" },
+                { "Edit", "Изменить" },
+                { "Delete", "Удалить" },
+            }
+        },
+        { "eng", new Dictionary<string, string>
+            {
+                { "VehicleNumber", "Vehicle Number" },
+                { "OwnerName", "Owner's Name" },
+                { "OwnerEmail", "Owner's Email" },
+                { "ViolationDate", "Violation Date" },
+                { "Speeding", "Speeding" },
+                { "FineAmount", "Fine Amount" },
+                { "AddNew", "Add New" },
+                { "Edit", "Edit" },
+                { "Delete", "Delete" },
+            }
+        },
+        { "est", new Dictionary<string, string>
+            {
+                { "VehicleNumber", "Sõiduki Number" },
+                { "OwnerName", "Omaniku Nimi" },
+                { "OwnerEmail", "Omaniku Epost" },
+                { "ViolationDate", "Rikkumisekuupaev" },
+                { "Speeding", "Kiiruse Ületamine" },
+                { "FineAmount", "Trahvi Suurus" },
+                { "AddNew", "Lisa uus" },
+                { "Edit", "Muuda" },
+                { "Delete", "Kustuta" },
+            }
+        }
+    };
+
+            // Выбираем язык
+            string selectedLang = !string.IsNullOrEmpty(lang) ? lang : "est";
+            ViewBag.Language = selectedLang;
+
+            // Передаем переведенные строки в представление
+            ViewBag.Translations = translations[selectedLang];
+
             IEnumerable<Traahv> traahvs = db.Traahv.ToList();
             return View(traahvs);
         }
@@ -200,7 +250,7 @@ namespace TraahvIndividual.Controllers
             IEnumerable<Traahv> traahvs = db.Traahv.ToList();
 
             return traahvs;
-        
+
         }
 
     }

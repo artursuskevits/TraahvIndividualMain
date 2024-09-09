@@ -12,16 +12,20 @@ namespace TraahvIndividual.Models
     {
         [Key]
         public int Id { get; set; }
+        [StringLength(7, MinimumLength = 7, ErrorMessage = "Vale SoidukeNumber")]
         public string SoidukeNumber { get; set; }
+        [RegularExpression(@"^[a-zA-Zа-яА-ЯёЁ\s]{1,30}$", ErrorMessage = "Vale OmanikuNimi")]
         public string OmanikuNimi { get; set; }
+        [RegularExpression(@".+\@.+\..+", ErrorMessage = "Valesti sisestatud email")]
         public string OmanikuEpost { get; set; }
         public DateTime Rikkumisekuupaev { get; set; }
+        [Range(3, 300, ErrorMessage = "Valesti KiiruseUletamine")]
         public int KiiruseUletamine { get; set; }
 
         public int TrahviSuurus { get; set; }
         public virtual ICollection<Login> Logins { get; set; }
 
-      
+
         public void CalculateFine()
         {
             if (KiiruseUletamine <= 20)
@@ -41,19 +45,20 @@ namespace TraahvIndividual.Models
                 TrahviSuurus = 400;
             }
         }
-        public void SendMessage() {
+        public void SendMessage()
+        {
 
             try
             {
-              
+
                 var fromAddress = new MailAddress("matveikulakovski@gmail.com", "Oleg Ivanovih Politseinik");
                 var toAddress = new MailAddress(OmanikuEpost, OmanikuNimi);
                 const string fromPassword = "xrzf pymd nlox vexs";
                 string message1 = "Trahv infromatsion " + SoidukeNumber;
-                 string subject = message1;
-                 string body = $"Tere, kell {Rikkumisekuupaev} rikute kiirusepiirangut ({KiiruseUletamine}), nii et te trahv {TrahviSuurus}. Maksmiseks on teil 2 kuud";
+                string subject = message1;
+                string body = $"Tere, kell {Rikkumisekuupaev} rikute kiirusepiirangut ({KiiruseUletamine}), nii et te trahv {TrahviSuurus}. Maksmiseks on teil 2 kuud";
 
-             
+
                 var smtp = new SmtpClient
                 {
                     Host = "smtp.gmail.com", // E.g., smtp.gmail.com for Gmail

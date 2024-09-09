@@ -1,18 +1,37 @@
 ﻿@using TraahvIndividual.Models
 @model LoginViewModel
 @{
-    ViewBag.Title = "Logi sisse";
+    ViewBag.Title = ViewBag.Language == "ru" ? "Вход" : ViewBag.Language == "eng" ? "Log in" : "Logi sisse";
 }
 
 <main aria-labelledby="title" style="color: white; background: rgba(40, 77, 124, 0.7); border-radius: 20px; padding: 20px;">
-    <h2 id="title">@ViewBag.Title.</h2>
+    <div id="language-buttons" style="margin-bottom: 20px;">
+        <button onclick="setLanguage('ru')">Русский язык</button>
+        <button onclick="setLanguage('est')">Eesti keel</button>
+        <button onclick="setLanguage('eng')">English</button>
+    </div>
+    <h2 id="title">@ViewBag.Title</h2>
+
     <div class="row">
         <div class="col-md-8">
             <section id="loginForm">
                 @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
                 {
                     @Html.AntiForgeryToken()
-                    <h4 style="opacity: 0.6;">Kasutage sisselogimiseks kohalikku kontot.</h4>
+                    <h4>
+                        @if (ViewBag.Language == "ru")
+                        {
+                            @:Войдите с помощью локальной учетной записи.
+                        }
+                        else if (ViewBag.Language == "eng")
+                        {
+                            @:Use a local account to log in.
+                        }
+                        else
+                        {
+                            @:Logi sisse kohaliku kontoga.
+                        }
+                    </h4>
                     <hr />
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="row">
@@ -39,12 +58,25 @@
                     </div>
                     <div class="row">
                         <div class="offset-md-2 col-md-10">
-                            <input type="submit" value="Logi sisse" class="btn btn-outline-dark" style="color: white; background-color: #2D287C; border: solid #2D287C 1px; margin-top: 10px;" />
+                            <input type="submit" value="@(
+                                ViewBag.Language == "ru" ? "Войти" :
+                                ViewBag.Language == "eng" ? "Log in" : "Logi sisse"
+                            )" class="btn btn-outline-dark" style="color: white; background-color: #2D287C; border: solid #2D287C 1px; margin-top: 10px;" />
                         </div>
                     </div>
+                    <p>
+
+
+                        @Html.ActionLink(
+                            ViewBag.Language == "ru" ? "Зарегистрироваться как новый пользователь" :
+                            ViewBag.Language == "eng" ? "Register as a new user" : "Registreeri uue kasutajana",
+                            "Register")
+
+
+                    </p>
                     @*<p>
-                        @Html.ActionLink("Register as a new user", "Register")
-                    </p>*@
+                            @Html.ActionLink("Register as a new user", "Register")
+                        </p>*@
                     @* Enable this once you have account confirmation enabled for password reset functionality
                         <p>
                             @Html.ActionLink("Forgot your password?", "ForgotPassword")
@@ -53,13 +85,20 @@
             </section>
         </div>
         @*<div class="col-md-4">
-            <section id="socialLoginForm">
-                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-            </section>
-        </div>*@
+                <section id="socialLoginForm">
+                    @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+                </section>
+            </div>*@
     </div>
 </main>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+<script type="text/javascript">
+    function setLanguage(lang) {
+        var currentUrl = window.location.href.split('?')[0];
+        var newUrl = currentUrl + (currentUrl.indexOf('?') === -1 ? '?' : '&') + 'lang=' + lang;
+        window.location.href = newUrl;
+    }
+</script>
