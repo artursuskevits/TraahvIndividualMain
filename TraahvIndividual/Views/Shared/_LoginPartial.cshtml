@@ -1,44 +1,51 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
+    <ul class="navbar-nav" style="position: relative; right: 50px;">
+        <li id="language-buttons" style="margin-top: 5px; margin-right:10px;">
+            <button onclick="setLanguage('ru')" style="background-color: transparent; border: solid 2px #28777C"> <img src="~/Content/Images/russia_flag.svg" alt="Russian Flag" height="25" /> </button>
+            <button onclick="setLanguage('est')" style="background-color: transparent; border: solid 2px #28777C"> <img src="~/Content/Images/estonia_flag.svg" alt="Estonian Flag" height="25" /> </button>
+            <button onclick="setLanguage('eng')" style="background-color: transparent; border: solid 2px #28777C"> <img src="~/Content/Images/english_flag.png" alt="English Flag" height="25" /> </button>
+        </li>
+    </ul>
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-    <ul class="navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class="nav-link" })
-        </li>
-        <li><a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
+        <ul class="navbar-nav navbar-right">
+            <li>
+                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link" })
+            </li>
+            <li><a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        </ul>
     }
 }
 else
 {
-<ul class="navbar-nav" style="position: relative; right: 50px;">
-    <li id="language-buttons" style="margin-top: 5px; margin-right:10px;">
-        <button onclick="setLanguage('ru')" style="background-color: transparent; border: solid 2px #28777C"> <img src="~/Content/Images/russia_flag.svg" alt="Russian Flag" height="25"/> </button>
-        <button onclick="setLanguage('est')" style="background-color: transparent; border: solid 2px #28777C"> <img src="~/Content/Images/estonia_flag.svg" alt="Estonian Flag" height="25"/> </button>
-        <button onclick="setLanguage('eng')" style="background-color: transparent; border: solid 2px #28777C"> <img src="~/Content/Images/english_flag.png" alt="English Flag" height="25"/> </button>
-    </li>
-</ul>
-<ul class="navbar-nav navbar-right">
-    <li>
-        @Html.ActionLink(
-        ViewBag.Language == "ru" ? "Регистрация" : ViewBag.Language == "eng" ? "Register" : "Registreerimine",
-        "Register",
-        "Account",
-        new { lang = ViewBag.Language },
-        new { id = "registerLink", @class = "nav-link" })
-    </li>
+    <ul class="navbar-nav" style="position: relative; right: 50px;">
+        <li id="language-buttons" style="margin-top: 5px; margin-right:10px;">
+            <button onclick="setLanguage('ru')" style="background-color: transparent; border: solid 2px #28777C"> <img src="~/Content/Images/russia_flag.svg" alt="Russian Flag" height="25" /> </button>
+            <button onclick="setLanguage('est')" style="background-color: transparent; border: solid 2px #28777C"> <img src="~/Content/Images/estonia_flag.svg" alt="Estonian Flag" height="25" /> </button>
+            <button onclick="setLanguage('eng')" style="background-color: transparent; border: solid 2px #28777C"> <img src="~/Content/Images/english_flag.png" alt="English Flag" height="25" /> </button>
+        </li>
+    </ul>
+    <ul class="navbar-nav navbar-right">
+        <li>
+            @Html.ActionLink(
+                 ViewBag.Language == "ru" ? "Регистрация" : ViewBag.Language == "eng" ? "Register" : "Registreerimine",
+                 "Register",
+                 "Account",
+                 new { lang = ViewBag.Language },
+                 new { id = "registerLink", @class = "nav-link" })
+        </li>
 
-    <li>
-        @Html.ActionLink(
-        ViewBag.Language == "ru" ? "Логин" : ViewBag.Language == "eng" ? "Log in" : "Logi sisse",
-        "Login",
-        "Account",
-        new { lang = ViewBag.Language },
-        new { @class = "nav-link" })
-    </li>
-</ul>
+        <li>
+            @Html.ActionLink(
+                 ViewBag.Language == "ru" ? "Логин" : ViewBag.Language == "eng" ? "Log in" : "Logi sisse",
+                 "Login",
+                 "Account",
+                 new { lang = ViewBag.Language },
+                 new { @class = "nav-link" })
+        </li>
+    </ul>
 }

@@ -44,7 +44,7 @@ namespace TraahvIndividual.Controllers
 
 
 
-        //[AuthorizeUser("Admin2@gmail.com")]
+        [AuthorizeUser("Admin2@gmail.com")]
         public ActionResult Traahv(string lang)
         {
             var translations = new Dictionary<string, Dictionary<string, string>>
@@ -100,7 +100,7 @@ namespace TraahvIndividual.Controllers
             IEnumerable<Traahv> traahvs = db.Traahv.ToList();
             return View(traahvs);
         }
-        //[Authorize]
+        [Authorize]
         public ActionResult TraahvUsers(string lang = "est", string searchCarNumber = null)
         {
             var penalties = db.Traahv.AsQueryable();  // Запрос к базе данных
@@ -175,26 +175,28 @@ namespace TraahvIndividual.Controllers
             db.SaveChanges();
             return RedirectToAction("Traahv");
         }
-
         public ActionResult DeleteTraahv(int id, string lang)
         {
             Traahv d = db.Traahv.Find(id);
             if (d == null)
             {
                 return HttpNotFound();
-
             }
+
             string selectedLang = !string.IsNullOrEmpty(lang) ? lang : "est";
             ViewBag.Language = selectedLang;
 
-            // Устанавливаем язык в HttpContext
+            // Set culture
             CultureInfo newCulture = new CultureInfo(selectedLang);
             Thread.CurrentThread.CurrentCulture = newCulture;
             Thread.CurrentThread.CurrentUICulture = newCulture;
             HttpContext.Items["lang"] = selectedLang;
+
             return View(d);
         }
-        [HttpPost, ActionName("DeleteTraahv")]
+
+        // POST: Delete the penalty
+        [HttpPost, ActionName("DeleteTraahvConfirmed")]
         public ActionResult DeleteTraahvConfirmed(int id)
         {
             Traahv d = db.Traahv.Find(id);
@@ -205,7 +207,7 @@ namespace TraahvIndividual.Controllers
 
             db.Traahv.Remove(d);
             db.SaveChanges();
-            return RedirectToAction("Traahv");
+            return RedirectToAction("Index"); // Redirect to your list view
         }
         //public ActionResult Index(string searchCarNumber = null)
         //{

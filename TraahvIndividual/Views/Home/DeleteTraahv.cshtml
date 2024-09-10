@@ -31,20 +31,16 @@
         <dd>@Html.DisplayFor(model => model.TrahviSuurus)</dd>
     </dl>
 
-    @using (Html.BeginForm("DeleteTraahv", "Traahv", FormMethod.Post))
-    {
-        @Html.AntiForgeryToken()
-        <div class="form-actions no-color">
-            <input type="submit" value="@(
-                ViewBag.Language == "ru" ? "Удалить" :
-                ViewBag.Language == "eng" ? "Delete" :
-                "Kustuta")" class="btn btn-danger" style="color: white; background-color: #0d6efd; border: solid #0d6efd 1px; margin-top: 10px; " /> |
-            @Html.ActionLink(
-                ViewBag.Language == "ru" ? "Назад к списку" :
-                ViewBag.Language == "eng" ? "Back to List" :
-                "Tagasi nimekirja", "Traahv", null, new { @class = "btn btn-default", style = "background-color: #0d6efd; border: solid #0d6efd 1px; margin-top: 10px; color: white;" })
-        </div>
-    }
+    @using (Html.BeginForm("DeleteTraahvConfirmed", "Home", new { id = Model.Id }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-actions no-color">
+        <input type="submit" value="@(ViewBag.Language == "ru" ? "Удалить" : ViewBag.Language == "eng" ? "Delete" : "Kustuta")" class="btn btn-danger" style="color: white; background-color: #0d6efd; border: solid #0d6efd 1px; margin-top: 10px;" />
+        |
+        @Html.ActionLink(ViewBag.Language == "ru" ? "Назад к списку" : ViewBag.Language == "eng" ? "Back to List" : "Tagasi nimekirja", "Traahv", null, new { @class = "btn btn-default", style = "background-color: #0d6efd; border: solid #0d6efd 1px; margin-top: 10px; color: white;" })
+    </div>
+}
+
 </div>
 
 @section Scripts {
