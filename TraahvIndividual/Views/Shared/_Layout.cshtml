@@ -42,13 +42,16 @@
                         )
                     </li>
                     <li>
-                        @Html.ActionLink(
-                            ViewBag.Language == "ru" ? "Админ панель" : ViewBag.Language == "eng" ? "Admin panel" : "Administraatori paneel",
-                            "Traahv",
-                            "Home",
-                            new { lang = ViewBag.Language },
-                            new { @class = "nav-link" }
-                        )
+                        @if (User.Identity.IsAuthenticated && User.Identity.Name == "Admin2@gmail.com")
+                        {
+                            @Html.ActionLink(
+                                ViewBag.Language == "ru" ? "Админ панель" : ViewBag.Language == "eng" ? "Admin panel" : "Administraatori paneel",
+                                "Traahv",
+                                "Home",
+                                new { lang = ViewBag.Language },
+                                new { @class = "nav-link" }
+                            )
+                        }
                     </li>
                 </ul>
                 @Html.Partial("_LoginPartial")
