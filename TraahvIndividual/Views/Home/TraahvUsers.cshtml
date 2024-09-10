@@ -3,11 +3,6 @@
 @{
     ViewBag.Title = ViewBag.Language == "ru" ? "Штрафы" : ViewBag.Language == "eng" ? "Penalties" : "Trahvid";
 }
-<div id="language-buttons" style="margin-bottom: 20px;">
-    <button onclick="setLanguage('ru')">Русский язык</button>
-    <button onclick="setLanguage('est')">Eesti keel</button>
-    <button onclick="setLanguage('eng')">English</button>
-</div>
 
 <main style="color: white; background: rgba(40, 77, 124, 0.7); border-radius: 20px; padding: 20px;">
     <h2>@ViewBag.Title</h2>

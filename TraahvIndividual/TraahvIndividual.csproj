@@ -247,6 +247,10 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Images\church_1.png" />
+    <Content Include="Content\Images\english_flag.png" />
+    <Content Include="Content\Images\estonia_flag.svg" />
+    <Content Include="Content\Images\logo_penalties.png" />
+    <Content Include="Content\Images\russia_flag.svg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />

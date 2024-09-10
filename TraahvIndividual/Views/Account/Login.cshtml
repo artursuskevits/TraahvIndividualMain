@@ -5,11 +5,7 @@
 }
 
 <main aria-labelledby="title" style="color: white; background: rgba(40, 77, 124, 0.7); border-radius: 20px; padding: 20px;">
-    <div id="language-buttons" style="margin-bottom: 20px;">
-        <button onclick="setLanguage('ru')">Русский язык</button>
-        <button onclick="setLanguage('est')">Eesti keel</button>
-        <button onclick="setLanguage('eng')">English</button>
-    </div>
+
     <h2 id="title">@ViewBag.Title</h2>
 
     <div class="row">
@@ -34,21 +30,21 @@
                     </h4>
                     <hr />
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="row">
+                    <div class="row" style="margin-bottom: 10px;">
                         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 col-form-label" })
                         <div class="col-md-10">
                             @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
                             @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-bottom: 10px;">
                         @Html.LabelFor(m => m.Password, new { @class = "col-md-2 col-form-label" })
                         <div class="col-md-10">
                             @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
                             @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-bottom: 10px;">
                         <div class="offset-md-2 col-md-10">
                             <div class="checkbox">
                                 @Html.CheckBoxFor(m => m.RememberMe)
@@ -61,19 +57,16 @@
                             <input type="submit" value="@(
                                 ViewBag.Language == "ru" ? "Войти" :
                                 ViewBag.Language == "eng" ? "Log in" : "Logi sisse"
-                            )" class="btn btn-outline-dark" style="color: white; background-color: #2D287C; border: solid #2D287C 1px; margin-top: 10px;" />
+                            )" class="btn btn-outline-dark" style="color: white; background-color: #0d6efd; border: solid #0d6efd 1px; margin-top: -3px;" />
+                            <p style="display: inline-block; padding: 0.41em 1em; color: white; background-color: #0d6efd; border: solid #0d6efd 1px; cursor: pointer; border-radius: 6px;">
+                                @Html.ActionLink(
+                                    ViewBag.Language == "ru" ? "Зарегистрироваться как новый пользователь" :
+                                    ViewBag.Language == "eng" ? "Register as a new user" : "Registreeri uue kasutajana",
+                                    "Register", null, new { style = "text-decoration: none; color: white; margin-top: 10px;" }
+                                )
+                            </p>
                         </div>
                     </div>
-                    <p>
-
-
-                        @Html.ActionLink(
-                            ViewBag.Language == "ru" ? "Зарегистрироваться как новый пользователь" :
-                            ViewBag.Language == "eng" ? "Register as a new user" : "Registreeri uue kasutajana",
-                            "Register")
-
-
-                    </p>
                     @*<p>
                             @Html.ActionLink("Register as a new user", "Register")
                         </p>*@

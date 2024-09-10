@@ -4,12 +4,6 @@
     ViewBag.Title = ViewBag.Language == "ru" ? "Создать Штраф" : ViewBag.Language == "eng" ? "Create Penalty" : "Loo Traahv";
 }
 
-<div id="language-buttons" style="margin-bottom: 20px;">
-    <button onclick="setLanguage('ru')">Русский язык</button>
-    <button onclick="setLanguage('est')">Eesti keel</button>
-    <button onclick="setLanguage('eng')">English</button>
-</div>
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -69,8 +63,8 @@
                 <input type="submit" value="@(
                     ViewBag.Language == "ru" ? "Создать" :
                     ViewBag.Language == "eng" ? "Create" : "Loo"
-                )" class="btn btn-default" style="color: white; background-color: #2D287C; border: solid #2D287C 1px; margin-top: 10px;" />
-                <a href="~/Home/Traahv" class="btn btn-primary btn-md" style="background-color: #2D287C; border: solid #2D287C 1px; margin-top: 10px;">
+                )" class="btn btn-default" style="color: white; background-color: #0d6efd; border: solid #0d6efd 1px; margin-top: 10px; " />
+                <a href="~/Home/Traahv" class="btn btn-primary btn-md" style="background-color: #0d6efd; border: solid #0d6efd 1px; margin-top: 10px; ">
                     @(ViewBag.Language == "ru" ? "Назад к списку" : ViewBag.Language == "eng" ? "Back to List" : "Tagasi nimekirja")
                 </a>
             </div>

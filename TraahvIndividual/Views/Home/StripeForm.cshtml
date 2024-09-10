@@ -3,33 +3,31 @@
 @{
     ViewBag.Title = "Оплата штрафа";
 }
-<div id="language-buttons" style="margin-bottom: 20px;">
-    <button onclick="setLanguage('ru')">Русский язык</button>
-    <button onclick="setLanguage('est')">Eesti keel</button>
-    <button onclick="setLanguage('eng')">English</button>
-</div>
-<h2>@(ViewBag.Language == "ru" ? "Оплата штрафа" : ViewBag.Language == "eng" ? "Pay Penalty" : "Trahvi maksmine")</h2>
+<main style="color: white; background: rgba(40, 77, 124, 0.7); border-radius: 20px; padding: 10px;">
+    <h2>@(ViewBag.Language == "ru" ? "Оплата штрафа" : ViewBag.Language == "eng" ? "Pay Penalty" : "Trahvi maksmine")</h2>
 
-<form action="@Url.Action("Charge", "Home")" method="post">
-    <label for="card">
-        @(ViewBag.Language == "ru" ? "Номер карты:" : ViewBag.Language == "eng" ? "Card Number:" : "Kaardi number:")
-    </label>
-    <input type="text" id="card" name="card" />
+    <form action="@Url.Action("Charge", "Home")" method="post" style="margin-bottom: 20px;">
+        <label for="card">
+            @(ViewBag.Language == "ru" ? "Номер карты:" : ViewBag.Language == "eng" ? "Card Number:" : "Kaardi number:")
+        </label>
+        <input type="text" id="card" name="card" style="border-radius: 10px; border: solid 1px white; margin-right: 40px;"/>
 
-    <label for="expiry">
-        @(ViewBag.Language == "ru" ? "Срок действия:" : ViewBag.Language == "eng" ? "Expiry Date:" : "Kehtivusaeg:")
-    </label>
-    <input type="text" id="expiry" name="expiry" />
+        <label for="expiry">
+            @(ViewBag.Language == "ru" ? "Срок действия:" : ViewBag.Language == "eng" ? "Expiry Date:" : "Kehtivusaeg:")
+        </label>
+        <input type="text" id="expiry" name="expiry" style="border-radius: 10px; border: solid 1px white; margin-right: 40px;"/>
 
-    <label for="cvc">
-        @(ViewBag.Language == "ru" ? "CVC:" : ViewBag.Language == "eng" ? "CVC:" : "CVC:")
-    </label>
-    <input type="text" id="cvc" name="cvc" />
+        <label for="cvc">
+            @(ViewBag.Language == "ru" ? "CVC:" : ViewBag.Language == "eng" ? "CVC:" : "CVC:")
+        </label>
+        <input type="text" id="cvc" name="cvc" style="border-radius: 10px; border: solid 1px white; margin-right: 40px;"/>
 
-    <button type="submit">
+    </form>
+    <button type="submit" style="background-color: #0d6efd; border: solid #0d6efd 5px; margin-top: 10px; border-radius: 7px; color: white;">
         @(ViewBag.Language == "ru" ? "Оплатить" : ViewBag.Language == "eng" ? "Pay" : "Makse")
     </button>
-</form>
+</main>
+
 <script type="text/javascript">
     function setLanguage(lang) {
         var currentUrl = window.location.href.split('?')[0];

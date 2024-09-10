@@ -7,11 +7,6 @@
 
 
 <main style="color: white; background: rgba(40, 77, 124, 0.7); border-radius: 20px; padding: 20px; ">
-    <div id="language-buttons" style="margin-bottom: 20px;">
-        <button onclick="setLanguage('ru')">Русский язык</button>
-        <button onclick="setLanguage('est')">Eesti keel</button>
-        <button onclick="setLanguage('eng')">English</button>
-    </div>
     <h2>
         @if (language == "ru")
         {
@@ -40,7 +35,6 @@
         @foreach (var item in Model)
         {
             <tr>
-                <
                 <td>@item.SoidukeNumber</td>
                 <td>@item.OmanikuNimi</td>
                 <td>@item.OmanikuEpost</td>
@@ -53,20 +47,20 @@
                                       translations["Edit"],
                                       "EditTraahv",
                                       new { id = item.Id },
-                                      new { @class = "btn btn-primary btn-md", style = "background-color: #ad0505; border: solid #ad0505 1px;" }
+                                      new { @class = "btn btn-primary btn-md", style = "background-color: #0d6efd; border: solid #0d6efd 1px; opacity: 1; !important" }
                                   ) |
                     @Html.ActionLink(
                                        translations["Delete"],
                                        "DeleteTraahv",
                                        new { id = item.Id },
-                                       new { @class = "btn btn-primary btn-md", style = "background-color: #ad0505; border: solid #ad0505 1px;" }
+                                       new { @class = "btn btn-primary btn-md", style = "background-color: #0d6efd; border: solid #0d6efd 1px; opacity: 1; !important" }
                                    )
                 </td>
             </tr>
         }
     </table>
     <p>
-        <a href="CreateTraahv" class="btn btn-primary btn-md" style="background-color: #ad0505; border: solid #ad0505 1px; right: 10px;">
+        <a href="CreateTraahv" class="btn btn-primary btn-md" style="background-color: #0d6efd; border: solid #0d6efd 1px; right: 10px; ">
             @translations["AddNew"] &raquo;
         </a>
     </p>

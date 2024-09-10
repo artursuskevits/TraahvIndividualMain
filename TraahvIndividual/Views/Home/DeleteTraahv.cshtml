@@ -5,17 +5,12 @@
 }
 
 <div style="color: white; background: rgba(40, 77, 124, 0.7); border-radius: 20px; padding: 20px;">
-    <div id="language-buttons" style="margin-bottom: 20px;">
-        <button onclick="setLanguage('ru')">Русский язык</button>
-        <button onclick="setLanguage('est')">Eesti keel</button>
-        <button onclick="setLanguage('eng')">English</button>
-    </div>
 
     <h2>@ViewBag.Title</h2>
     <h3>@(ViewBag.Language == "ru" ? "Вы уверены, что хотите удалить это?" : ViewBag.Language == "eng" ? "Are you sure you want to delete this?" : "Kas olete kindel, et soovite selle kustutada?")</h3>
 
-    <h4>@(ViewBag.Language == "ru" ? "Штраф" : ViewBag.Language == "eng" ? "Penalty" : "Trahv")</h4>
     <hr />
+    <h4>@(ViewBag.Language == "ru" ? "Штраф" : ViewBag.Language == "eng" ? "Penalty" : "Trahv")</h4>
     <dl class="dl-horizontal">
         <dt>@(ViewBag.Language == "ru" ? "Номер транспортного средства" : ViewBag.Language == "eng" ? "Vehicle Number" : "Sõiduki Number")</dt>
         <dd>@Html.DisplayFor(model => model.SoidukeNumber)</dd>
@@ -43,11 +38,11 @@
             <input type="submit" value="@(
                 ViewBag.Language == "ru" ? "Удалить" :
                 ViewBag.Language == "eng" ? "Delete" :
-                "Kustuta")" class="btn btn-danger" style="color: white; background-color: #2D287C; border: solid #2D287C 1px; margin-top: 10px;" /> |
+                "Kustuta")" class="btn btn-danger" style="color: white; background-color: #0d6efd; border: solid #0d6efd 1px; margin-top: 10px; " /> |
             @Html.ActionLink(
                 ViewBag.Language == "ru" ? "Назад к списку" :
                 ViewBag.Language == "eng" ? "Back to List" :
-                "Tagasi nimekirja", "Index", null, new { @class = "btn btn-default", style = "background-color: #2D287C; border: solid #2D287C 1px; margin-top: 10px;" })
+                "Tagasi nimekirja", "Traahv", null, new { @class = "btn btn-default", style = "background-color: #0d6efd; border: solid #0d6efd 1px; margin-top: 10px; color: white;" })
         </div>
     }
 </div>
